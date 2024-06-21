@@ -1,0 +1,16 @@
+[
+    {
+        "username": "Crilin",
+        "nome": "Cristian",
+        "cognome": "Rossato",
+        "email": "cristian.rossato55@gmail.com",
+        "password": "CIAOOOO1",
+        "preferiti": [
+            "Pizza",
+            "Lasagna",
+            "Pasta"
+        ],
+        "ricettario": [],
+        "foto": "LOGO2.png"
+    }
+]
