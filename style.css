@@ -8,12 +8,21 @@ body::-webkit-scrollbar {
     display: none; /* Nasconde la barra di scorrimento per WebKit */
 }
 
-
+#corpoHome {
+    background-color: whitesmoke;
+    padding: 10px;
+    padding-top: 20px;
+    padding-left: 75px;
+    font-weight: 600;
+    color: #fdb833;
+    font-size: 1.5rem;
+}
 
 .navbar {
-    border-bottom: 1.5px solid #1B1A17;
     padding: 15px;
-    background-color: white;
+    background-color: whitesmoke;
+   /* border-bottom: 0.5px solid lightgray;*/
+    box-shadow: 0px 2px 3px lightgray;
 }
 
 #btn_search {
@@ -27,7 +36,7 @@ body::-webkit-scrollbar {
 #section {
     width: 80%;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 10px;
     padding: 10px;
 }
 
@@ -48,4 +57,20 @@ body::-webkit-scrollbar {
     min-width: 300px;
     max-width: 300px;
     margin: 10px;
+    margin-top: 20px;
+    border: 0px solid white;
+    text-align: left;
+    justify-content: flex-end;
+}
+
+.card-title {
+    font-weight: 600;
+    color: grey;
+    font-size: 1.25rem;
+    justify-content: flex-end;
+}
+
+.card-text {
+    font-weight: 500;
+    font-size: medium;
 }

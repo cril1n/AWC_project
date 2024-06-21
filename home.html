@@ -13,19 +13,19 @@
 
 <body>
   <nav class="navbar fixed-top">
-    <div class="container-fluid row ">
+    <div class="container-fluid row">
       <div class="col">
         <a href="home.html" class="navbar-brand"><img id="logo" src="LOGO.png" alt=""></a>
       </div>
-      <div class="col-sm-5 text-center">
+      <div class="col-sm-6 text-center">
         <form class="d-flex" role="search">
-          <input class="form-control me-2 focus-ring focus-ring-secondary " type="search" placeholder="Search"
+          <input class="form-control me-2 focus-ring focus-ring-secondary rounded-5" style="border: 0px solid white;" type="search" placeholder="Search a recipe!"
             aria-label="Search">
-          <button class="btn" id="btn_search" type="submit">Search</button>
+          <button class="btn rounded-5" style="border: 0px solid white; background-color: #fecf3e; color: black;" id="btn_search" type="submit">Search</button>
         </form>
       </div>
       <div class="col text-end">
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+        <button class="navbar-toggler focus-ring focus-ring-warning rounded-5" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
           aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -65,24 +65,21 @@
 
   <div id="master_carosello" class="d-none">
     <a href=""><img src="" style="height: 590px; width: 100%;" class="rounded-2 d-block" alt="..."></a>
-    <div class="carousel-caption d-none d-md-block" style="text-shadow: 3px 3px 6px black;">
-      <strong>
-        <h3>First slide label</h3>
-        <h5>
-          <p>Some representative placeholder content for the first slide.</p>
-        </h5>
-      </strong>
+    <div class="carousel-caption d-none d-md-block" style="text-align: left; text-shadow: 0px 0px 2px grey;" >
+        <h3 style="font-size: 3.5rem; font-weight: 900;">First slide label</h3>
+        <h3><p>Some representative placeholder content for the first slide.</p></h3>
+        
     </div>
   </div>
 
   <div id="carouselExampleAutoplaying"
-    style="border: 1px solid white; width: 60%; margin-top: 100px; margin-bottom: 50px;"
-    class="carousel slide start-50 translate-middle-x " data-bs-ride="carousel">
+    style="width: 60%; margin-top: 100px; margin-bottom: 50px;"
+    class="carousel carousel-fade slide start-50 translate-middle-x shadow rounded" data-bs-ride="carousel">
     <div id="lista_carosello" class="carousel-inner">
 
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
-      data-bs-slide="prev" style="">
+      data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
@@ -93,8 +90,10 @@
     </button>
   </div>
 
+<div id="corpoHome" class="container-fluid">
+
   <div id="section" class="container-fluid">
-    <h4>Discover the cuisine of different countries!</h4>
+    Discover the cuisine of different countries!
     <div id="section_countries" class="card-container">
       <div id="master_countries" class="card col d-none">
         <img src="..." class="card-img-top" style="max-width: 100%;" alt="...">
@@ -108,48 +107,45 @@
   </div>
 
   <div id="section" class="container-fluid">
-    <h4>Choose your favorite breakfast!</h4>
+    Choose your favorite breakfast!
     <div id="section_breakfast" class="card-container">
       <div id="master_breakfast" class="card col d-none">
         <img src="..." class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-            content. This content is a little bit longer.</p>
+          
         </div>
       </div>
     </div>
   </div>
 
   <div id="section" class="container-fluid">
-    <h4>Try all the pasta dishes!</h4>
+    Try all the pasta dishes!
     <div id="section_pasta" class="card-container">
       <div id="master_pasta" class="card col d-none">
         <img src="..." class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-            content. This content is a little bit longer.</p>
+          
         </div>
       </div>
     </div>
   </div>
 
   <div id="section" class="container-fluid">
-    <h4>Suprise your guests with a new desserts!</h4>
+    Suprise your guests with a new desserts!
     <div id="section_dessert" class="card-container">
       <div id="master_dessert" class="card col d-none">
         <img src="..." class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-            content. This content is a little bit longer.</p>
+          
         </div>
       </div>
     </div>
   </div>
 
-
+</div>
 
 
 
