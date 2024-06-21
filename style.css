@@ -8,16 +8,6 @@ body::-webkit-scrollbar {
     display: none; /* Nasconde la barra di scorrimento per WebKit */
 }
 
-#corpoHome {
-    background-color: whitesmoke;
-    padding: 10px;
-    padding-top: 20px;
-    padding-left: 75px;
-    font-weight: 600;
-    color: #fdb833;
-    font-size: 1.5rem;
-}
-
 .navbar {
     padding: 15px;
     background-color: whitesmoke;
@@ -31,24 +21,6 @@ body::-webkit-scrollbar {
 
 #logo {
     width: 8%;
-}
-
-#section {
-    width: 80%;
-    margin: 0 auto;
-    margin-top: 10px;
-    padding: 10px;
-}
-
-.card-container {
-    width: 90%;
-    text-align: center;
-    overflow-x: auto; 
-    display: flex;
-}
-
-.card-container::-webkit-scrollbar {
-    display: none; /* Nasconde la barra di scorrimento per WebKit */
 }
 
 .card {
@@ -74,3 +46,44 @@ body::-webkit-scrollbar {
     font-weight: 500;
     font-size: medium;
 }
+
+.offcanvas-header {
+    background-color: whitesmoke;
+}
+
+
+
+
+
+/* HOME*/
+
+#corpoHome {
+    background-color: whitesmoke;
+    padding: 10px;
+    padding-top: 20px;
+    padding-left: 75px;
+    font-weight: 600;
+    color: #fdb833;
+    font-size: 1.5rem;
+}
+
+#section {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.card-container {
+    width: 90%;
+    text-align: center;
+    overflow-x: auto; 
+    display: flex;
+}
+
+.card-container::-webkit-scrollbar {
+    display: none; /* Nasconde la barra di scorrimento per WebKit */
+}
+
+
+

@@ -74,8 +74,6 @@ function mostraDessert(dessert, counter) {
     lista.appendChild(clone);
 }
 
-
-
 fetch(`https://www.themealdb.com/api/json/v1/1/list.php?a=list`)
     .then(response => response.json())
     .then(paesi => mostraCountries(paesi))
@@ -104,35 +102,5 @@ async function mostraCountries(paesi) {
 
 
 
+//LOGGING
 
-
-/*var lista = document.getElementById('lista_carosello');
-var master = document.getElementById('master_carosello');
-lista.innerHTML = "";
-lista.appendChild(master)
-var clone = master.cloneNode(true);
-clone.id = 'carosello-' + id_film
-//master.after(clone)
-lista.appendChild(clone);
-clone.classList.remove('d-none')*/
-
-
-/*
-function mostraScheda(ricette) {
-    document.getElementById('card-img-top').src = indirizzo_base_poster + film.poster_path
-    document.getElementById('card-title').innerHTML = film.title
-    document.getElementById('card-overview').innerHTML = film.overview
-    for (genere of film.genres) {
-        // EQUIVALENTE: 
-        // for(var i=0; i< film.genres.length; i++){
-        //genere = film.genres[i]
-        document.getElementsByClassName('list-group-item')[0].innerHTML += genere.name + '&nbsp'
-    }
-    document.getElementsByClassName('list-group-item')[1].innerHTML = film.release_date
-    document.getElementsByClassName('list-group-item')[2].innerHTML += '$' + film.budget
-    document.getElementsByClassName('list-group-item')[3].innerHTML += '$' + film.revenue
-}
-
-const indirizzo_base_poster = "https://www.themoviedb.org/t/p/w220_and_h330_face"
-const api_key = "11faf0487f0930a5bae0a5fb2bb8edb6"
-const url_base = "https://api.themoviedb.org/3"*/
