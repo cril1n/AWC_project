@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MealDB API Fetch Example</title>
+</head>
+
+<body>
+    <script>
+        // Funzione per cercare pasti che iniziano con la lettera 'a'
+        function fetchMealsByFirstLetter(letter) {
+            const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`;
+
+            console.log('Request URL:', url);
+
+            fetch(url)
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Fetched data:', data);
+                    if (data.meals) {
+                        displayResults(data.meals, `Meals starting with '${letter}'`);
+                    } else {
+                        console.log('No meals found for the given letter.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching meals by first letter:', error);
+                });
+        }
+
+        // Funzione per mostrare i risultati nella console (puoi modificarla per mostrare in HTML)
+        function displayResults(meals, title) {
+            console.log(title);
+            meals.forEach(meal => {
+                console.log(`Meal Name: ${meal.strMeal}`);
+                console.log(`Category: ${meal.strCategory}`);
+                console.log(`Area: ${meal.strArea}`);
+                console.log(`Instructions: ${meal.strInstructions}`);
+                console.log(`Thumbnail: ${meal.strMealThumb}`);
+                console.log('---');
+            });
+        }
+
+        // Esegui la funzione per cercare pasti che iniziano con 'a'
+        fetchMealsByFirstLetter('a');
+
+    </script> <!-- Assumi che tu abbia salvato il JS in un file fetchMeals.js -->
+</body>
+
+</html>
