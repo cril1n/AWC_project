@@ -61,35 +61,56 @@ function mostraCarosello(ricetta, counter) {
 
 }
 
-function mostraBreakfast(breakfast, counter) {
+async function mostraBreakfast(breakfast, counter) {
     var lista = document.getElementById('section_breakfast');
     var master = document.getElementById('master_breakfast');
     var clone = master.cloneNode(true);
     clone.id = 'card-' + breakfast.meals[counter].idMeal;
     clone.querySelector('h5').innerHTML = breakfast.meals[counter].strMeal;
     clone.querySelector('img').setAttribute('src', breakfast.meals[counter].strMealThumb);
-    clone.classList.remove('d-none');
+    url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=` + breakfast.meals[counter].idMeal;
+    await fetch(url)
+        .then(response => response.json())
+        .then(infos => {
+            data = infos;
+            clone.querySelector('p').innerHTML = infos.meals[0].strArea;
+            clone.classList.remove('d-none');
+        })
     lista.appendChild(clone);
 }
 
-function mostraPasta(pasta, counter) {
+async function mostraPasta(pasta, counter) {
     var lista = document.getElementById('section_pasta');
     var master = document.getElementById('master_pasta');
     var clone = master.cloneNode(true);
     clone.id = 'card-' + pasta.meals[counter].idMeal;
     clone.querySelector('h5').innerHTML = pasta.meals[counter].strMeal;
     clone.querySelector('img').setAttribute('src', pasta.meals[counter].strMealThumb);
-    clone.classList.remove('d-none');
+    url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=` + pasta.meals[counter].idMeal;
+    await fetch(url)
+        .then(response => response.json())
+        .then(infos => {
+            data = infos;
+            clone.querySelector('p').innerHTML = infos.meals[0].strArea;
+            clone.classList.remove('d-none');
+        })
     lista.appendChild(clone);
 }
-function mostraDessert(dessert, counter) {
+async function mostraDessert(dessert, counter) {
     var lista = document.getElementById('section_dessert');
     var master = document.getElementById('master_dessert');
     var clone = master.cloneNode(true);
     clone.id = 'card-' + dessert.meals[counter].idMeal;
     clone.querySelector('h5').innerHTML = dessert.meals[counter].strMeal;
     clone.querySelector('img').setAttribute('src', dessert.meals[counter].strMealThumb);
-    clone.classList.remove('d-none');
+    url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=` + dessert.meals[counter].idMeal;
+    await fetch(url)
+        .then(response => response.json())
+        .then(infos => {
+            data = infos;
+            clone.querySelector('p').innerHTML = infos.meals[0].strArea;
+            clone.classList.remove('d-none');
+        })
     lista.appendChild(clone);
 }
 
@@ -184,4 +205,89 @@ function isValidEmail(email) {
 function isValidPsw(str) {
     const regex = /^(?=.*\d).{8,}$/;
     return regex.test(str);
+}
+
+
+//RICETTE
+
+function mostraRicetteInside() {
+    document.getElementById('lista_ricette').innerHTML = "";
+    param = document.getElementById('barraRicerca').value;
+    ricercaXNome(param);
+    ricercaXIniziale(param);
+    ricercaXIngrediente(param);
+    ricercaXCategoria(param);
+    ricercaXArea(param);
+}
+
+function mostraRicetteOutside(param) {
+    document.getElementById('lista_ricette').innerHTML = "";
+    ricercaXNome(param);
+    ricercaXIniziale(param);
+    ricercaXIngrediente(param);
+    ricercaXCategoria(param);
+    ricercaXArea(param);
+}
+
+function ricercaXNome(param) {
+    url = `https://www.themealdb.com/api/json/v1/1/search.php?s=` + param;
+    fetch(url)
+        .then(response => response.json())
+        .then(ricette => caricaRicette(ricette))
+        .catch(error => {
+            console.error('Errore:', error);
+        });
+}
+function ricercaXIniziale(param) {
+    url = `https://www.themealdb.com/api/json/v1/1/search.php?f=` + param;
+    fetch(url)
+        .then(response => response.json())
+        .then(ricette => caricaRicette(ricette))
+        .catch(error => {
+            console.error('Errore:', error);
+        });
+}
+function ricercaXIngrediente(param) {
+    url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=` + param;
+    fetch(url)
+        .then(response => response.json())
+        .then(ricette => caricaRicette(ricette))
+        .catch(error => {
+            console.error('Errore:', error);
+        });
+}
+function ricercaXCategoria(param) {
+    url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=` + param;
+    fetch(url)
+        .then(response => response.json())
+        .then(ricette => caricaRicette(ricette))
+        .catch(error => {
+            console.error('Errore:', error);
+        });
+}
+function ricercaXArea(param) {
+    url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=` + param;
+    fetch(url)
+        .then(response => response.json())
+        .then(ricette => caricaRicette(ricette))
+        .catch(error => {
+            console.error('Errore:', error);
+        });
+}
+
+function caricaRicette(ricette) {
+    recipes = ricette.meals;
+    var lista = document.getElementById('lista_ricette');
+    var master = document.getElementById('master_recipe');
+
+    recipes.forEach(recipe => {
+        var clone = master.cloneNode(true);
+        clone.id = 'card-' + recipe.idMeal;
+        clone.querySelector('h5').innerHTML = recipe.strMeal;
+        clone.querySelector('p').innerHTML = recipe.strInstructions.substring(0, 230) + "...";
+        clone.querySelector('img').setAttribute('src', recipe.strMealThumb);
+        clone.classList.remove('d-none');
+        lista.appendChild(clone);
+    });
+
 }
