@@ -38,6 +38,13 @@ body::-webkit-scrollbar {
     justify-content: flex-end;
 }
 
+.card-container::-webkit-scrollbar {
+    display: none;
+    /* Nasconde la barra di scorrimento per WebKit */
+  }
+
+
+
 .card-title {
     font-weight: 600;
     color: grey;

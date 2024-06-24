@@ -291,3 +291,189 @@ function caricaRicette(ricette) {
     });
 
 }
+
+
+//RICETTA
+
+function caricaRicetta() {
+    fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=Venetian%20Duck%20Ragu')
+        .then(response => response.json())
+        .then(ricetta => mostraRicetta(ricetta))
+        .catch(error => {
+            console.error('Errore:', error);
+        });
+}
+
+function mostraRicetta(ricetta) {
+    ricetta = ricetta.meals[0];
+
+    document.getElementById('title').innerHTML = ricetta.strMeal;
+    document.getElementById('category').innerHTML = ricetta.strCategory;
+    document.getElementById('mainImg').src = ricetta.strMealThumb;
+
+    if (ricetta.strArea != 'Unknown') {
+        bandiera(ricetta.strArea)
+    }
+
+    ingrediente = 'example'
+    counter = 1;
+    var lista = document.getElementById('listaIngredient');
+    var master = document.getElementById('ingredient');
+    while (ingrediente != "") {
+        ingrediente = 'strIngredient' + counter;
+        quantita = 'strMeasure' + counter;
+        var clone = master.cloneNode(true);
+        clone.id = ingrediente;
+        ingrediente = ricetta[ingrediente];
+        quantita = ricetta[quantita];
+        clone.innerHTML = '<strong>' + quantita + '</strong>&nbsp' + ingrediente;
+        clone.classList.remove('d-none')
+        lista.appendChild(clone);
+        counter++;
+    }
+
+    var lista = document.getElementById('listaInstruction');
+    var master = document.getElementById('instruction');
+    instruction = '';
+    text = ricetta.strInstructions;
+    for (let char of text) {
+        instruction += char;
+        //console.log(char);
+        if (char == '.' || char == ';') {
+            var clone = master.cloneNode(true);
+            clone.innerHTML = instruction;
+            clone.classList.remove('d-none')
+            lista.appendChild(clone);
+            instruction = "";
+        }
+    }
+
+    impostaAltezza();
+    ricercaXCategoria2(ricetta.strCategory)
+
+}
+
+function impostaAltezza() {
+    var colIst = document.getElementById('listaInstruction');
+    var colPiat = document.getElementById('listaPiatti');
+    var colHeight = colIst.offsetHeight;
+    colPiat.style.height = colHeight + 'px';
+}
+
+function ricercaXCategoria2(param) {
+    url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=` + param;
+    fetch(url)
+        .then(response => response.json())
+        .then(ricette => mostraPiatti(ricette))
+        .catch(error => {
+            console.error('Errore:', error);
+        });
+}
+
+async function mostraPiatti(ricette) {
+    var lista = document.getElementById('listaPiatti');
+    var master = document.getElementById('masterPiatto');
+    ricette = ricette.meals
+    ricette.forEach(meal => {
+        var clone = master.cloneNode(true);
+        clone.id = 'card-' + meal.idMeal;
+        clone.querySelector('h5').innerHTML = meal.strMeal;
+        clone.querySelector('img').setAttribute('src', meal.strMealThumb);
+        clone.classList.remove('d-none');
+        lista.appendChild(clone);
+    });
+
+
+}
+
+function bandiera(country) {
+    switch (country) {
+        case 'American':
+            country = 'US'
+            break;
+        case 'British':
+            country = 'GB'
+            break;
+        case 'Canadian':
+            country = 'CA'
+            break;
+        case 'Chinese':
+            country = 'CN'
+            break;
+        case 'Croatian':
+            country = 'HR'
+            break;
+        case 'Dutch':
+            country = 'NL'
+            break;
+        case 'Egyptian':
+            country = 'EG'
+            break;
+        case 'Filipino':
+            country = 'PH'
+            break;
+        case 'French':
+            country = 'FR'
+            break;
+        case 'Greek':
+            country = 'GR'
+            break;
+        case 'Indian':
+            country = 'IN'
+            break;
+        case 'Irish':
+            country = 'IE'
+            break;
+        case 'Italian':
+            country = 'IT'
+            break;
+        case 'Jamaican':
+            country = 'JM'
+            break;
+        case 'Japanese':
+            country = 'JP'
+            break;
+        case 'Kenyan':
+            country = 'KE'
+            break;
+        case 'Malaysian':
+            country = 'MY'
+            break;
+        case 'Mexican':
+            country = 'MX'
+            break;
+        case 'Moroccan':
+            country = 'MA'
+            break;
+        case 'Polish':
+            country = 'PL'
+            break;
+        case 'Portuguese':
+            country = 'PT'
+            break;
+        case 'Russian':
+            country = 'RU'
+            break;
+        case 'Spanish':
+            country = 'ES'
+            break;
+        case 'Thai':
+            country = 'TH'
+            break;
+        case 'Tunisian':
+            country = 'TN'
+            break;
+        case 'Turkish':
+            country = 'TR'
+            break;
+        case 'Ukrainian':
+            country = 'UA'
+            break;
+        case 'Vietnamese':
+            country = 'VN'
+            break;
+        default:
+            break;
+    }
+    document.getElementById('flag').src = 'https://flagsapi.com/' + country + '/flat/64.png';
+}

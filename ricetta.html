@@ -10,6 +10,42 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <script src="code.js"></script>
+    <style>
+        .list-group-item {
+            background-color: white;
+        }
+
+        .card-container {
+            width: 90%;
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        #listaIngredient {
+            scrollbar-width: thin;
+            /* Larghezza della scrollbar */
+            scrollbar-color: rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.1);
+            /* Colore della scrollbar */
+        }
+
+        /* Personalizzazione della scrollbar per WebKit (Chrome, Safari) */
+        #listaIngredient::-webkit-scrollbar {
+            width: 8px;
+            /* Larghezza della scrollbar */
+        }
+
+        #listaIngredient::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            /* Colore dello sfondo della scrollbar */
+        }
+
+        #listaIngredient::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Colore del thumb (maniglia) della scrollbar */
+            border-radius: 10px;
+            /* Arrotondamento del thumb */
+        }
+    </style>
 </head>
 
 <body>
@@ -22,7 +58,7 @@
                 <form onsubmit="return false">
                     <div class="d-flex" role="search">
                         <input id="barraRicerca" class="form-control me-2 focus-ring focus-ring-secondary rounded-5"
-                            style="border: 0px solid white;" type="search" placeholder="Search a recipe!"
+                            style="border: 0px solid white;" type="search" placeholder="Search for a recipe!"
                             aria-label="Search">
                         <button onclick="mostraRicetteInside()" id="bottoneRicerca" class="btn rounded-5"
                             style="border: 0px solid white; background-color: #fdb833; color: black;">Search</button>
@@ -97,50 +133,89 @@
         </div>
     </div>
 
-    <div id="master" class="container-fluid" style="width: 70%; margin-top: 30px;">
-        <div class="row" style="margin-bottom: 20px;">
-            <div id="title" class="col" style="font-weight: 900; font-size: xx-large; color: #fdb833;">Ciao</div>
-            <div id="title" class="col" style="font-weight: 600; font-size: x-large; text-align: end;">CATEGORIA</div>
+    <div class="container-fluid" style="width: 75%; margin-top: 30px;">
+        <div class="row">
+            <div id="category" style="color: #fdb833; font-size: x-large; font-weight: 600;"></div>
         </div>
-        <div class="row " style="border: 1px solid black;">
+        <div class="row" style="margin-bottom: 20px;">
+            <div id="title" class="col-9" style="font-weight: 900; font-size: 4rem;"></div>
+            <div class="col-3 position-relative d-flex" style="text-align: end;">
+                <div class="position-absolute end-0"><img id="flag" src="" style="width: 80px" alt=""></div>
+            </div>
+        </div>
+        <div class="row ">
+            <div id="colImg" class="col">
+                <img id="mainImg" class="rounded shadow" style="width: 500px;" src="" alt="">
+            </div>
+            <div id="colIngr" class="col">
+                <h3 style="font-weight: 600;">Ingredients</h3>
+                <ul id="listaIngredient" class="list-group list-group-flush"
+                    style="margin-top: 20px; font-size: small; overflow-y: auto; height: 450px;">
+                    <li id="ingredient" class="list-group-item d-none">An item</li>
 
-            <div class="card" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="foto.jpg" id="mainImg" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-8">
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid" style="width: 75%; margin-top: 25px;">
+        <div class="row" style="display: flex;">
+            <div class="col-8">
+                <h3 style="font-weight: 600;">Instructions</h3>
+                <ol id="listaInstruction" class="list-group list-group-flush"
+                    style="margin-top: 20px; font-size: small;">
+                    <li id="instruction" class="list-group-item d-none">An item</li>
+                </ol>
+            </div>
+            <div class="col-4" style="margin-top: 10px;">
+                <h4 style="font-weight: 600;">Other similar dishes</h4>
+                <div id="listaPiatti" class="card-container">
+
+                    <div id="masterPiatto" class="card col d-none" style="max-width: 150px;">
+                        <img src="" class="card-img-top" alt="..." style="width: 100%;">
                         <div class="card-body">
-                            <h5 class="card-title">Ingredients:</h5>
-                            <p class="card-text">
-                            <ul class="list-group-flush">
-                                <li class="list-group-item">An item</li>
-                                <li class="list-group-item">A second item</li>
-                                <li class="list-group-item">A third item</li>
-                                <li class="list-group-item">A fourth item</li>
-                                <li class="list-group-item">And a fifth one</li>
-                            </ul>
-                            </p>
+                            <h5 class="card-title">Card title</h5>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
 
 
+    <div class="container-fluid"
+        style="background-color: white; padding-top: 40px; padding-bottom: 40px; text-align: center;">
+        <div class="row w-75"
+            style="text-align: center; border-top: 1px solid lightgray; padding-top: 40px; margin-left: 160px;">
+            <div class="col"><img src="LOGO.png" alt="" style="height: 150px;"></div>
+            <div class="col">
+                <h5 style="font-weight: 600;">Follow us on </h5>
+                <ul class="list-group list-group-flush position-relative">
+                    <li class="list-group-item"><a href="https://www.instagram.com"><img style="margin-right: 10px;"
+                                src="instagram.svg" alt=""></a>Instagram</li>
+                    <li class="list-group-item"><a href="https://www.facebook.com"><img style="margin-right: 10px;"
+                                src="facebook.svg" alt=""></a>Facebook</li>
+                    <li class="list-group-item"><a href="https://www.tiktok.com"><img style="margin-right: 10px;"
+                                src="tiktok.svg" alt=""></a>TikTok</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h5 style="font-weight: 600;">Stuffs:</h5>
+                <ul class="list-group list-group-flush " style="background-color: whitesmoke;">
+                    <li class="list-group-item"><a href="sign.html"><u>Registrati</u></a></li>
+                    <li class="list-group-item"><a href="https://github.com/cril1n"><u>Credits</u></a></li>
+                    <li class="list-group-item"><a href="https://www.themealdb.com/"><u>Data source</u></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
 
 
     <script>
         checkLog();
-
-
-
+        caricaRicetta();
 
 
     </script>
