@@ -5,12 +5,13 @@ body {
 }
 
 body::-webkit-scrollbar {
-    display: none; /* Nasconde la barra di scorrimento per WebKit */
+    display: none;
+    /* Nasconde la barra di scorrimento per WebKit */
 }
 
 .list-group-item {
     background-color: whitesmoke;
-  }
+}
 
 .navbar {
     padding: 15px;
@@ -31,19 +32,24 @@ body::-webkit-scrollbar {
     white-space: wrap;
     min-width: 300px;
     max-width: 300px;
-    margin: 10px;
     margin-top: 20px;
     border: 0px solid white;
     text-align: left;
     justify-content: flex-end;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    margin: 20px;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .card-container::-webkit-scrollbar {
     display: none;
     /* Nasconde la barra di scorrimento per WebKit */
-  }
-
-
+}
 
 .card-title {
     font-weight: 600;
@@ -58,14 +64,23 @@ body::-webkit-scrollbar {
 }
 
 .offcanvas-header {
-    background-color: whitesmoke;
+    border-bottom: 2px solid black;
+    display: flex;
+    align-items: center;
 }
 
 a {
-    text-decoration: none; /* Rimuove la sottolineatura */
-    color: inherit; /* Usa il colore del testo circostante o puoi specificare un colore */
+    text-decoration: none;
+    /* Rimuove la sottolineatura */
+    color: inherit;
+    /* Usa il colore del testo circostante o puoi specificare un colore */
 }
 
+
+.nav-link {
+    font-size: small;
+    font-weight: 600;
+}
 
 /* HOME*/
 
@@ -78,7 +93,3 @@ a {
     color: #fdb833;
     font-size: 1.5rem;
 }
-
-
-
-

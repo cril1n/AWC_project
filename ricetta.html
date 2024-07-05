@@ -16,34 +16,37 @@
         }
 
         .card-container {
-            width: 90%;
-            text-align: center;
             overflow-y: auto;
         }
 
-        #listaIngredient {
-            scrollbar-width: thin;
-            /* Larghezza della scrollbar */
-            scrollbar-color: rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.1);
-            /* Colore della scrollbar */
+        .card {
+            background-color: whitesmoke;
         }
 
-        /* Personalizzazione della scrollbar per WebKit (Chrome, Safari) */
         #listaIngredient::-webkit-scrollbar {
-            width: 8px;
+            width: 12px;
             /* Larghezza della scrollbar */
-        }
-
-        #listaIngredient::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.1);
-            /* Colore dello sfondo della scrollbar */
+            background-color: whitesmoke;
+            /* Colore di sfondo della scrollbar */
         }
 
         #listaIngredient::-webkit-scrollbar-thumb {
-            background-color: rgba(0, 0, 0, 0.5);
-            /* Colore del thumb (maniglia) della scrollbar */
+            background-color: #888;
+            /* Colore del "pollice" della scrollbar */
             border-radius: 10px;
-            /* Arrotondamento del thumb */
+            /* Angoli arrotondati del "pollice" */
+            border: 3px solid #f1f1f1;
+            /* Margine attorno al "pollice" per l'effetto di spazio */
+        }
+
+        #listaIngredient::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+            /* Colore del "pollice" quando è in hover */
+        }
+
+        #listaIngredient::-webkit-scrollbar-button {
+            display: none;
+            /* Nasconde le frecce */
         }
     </style>
 </head>
@@ -76,24 +79,27 @@
             </div>
         </div>
 
-        <div class="offcanvas offcanvas-end" style="width: 300px;" tabindex="-1" id="offcanvasNavbar"
+        <div class="offcanvas offcanvas-end p-3" style="width: 300px;" tabindex="-1" id="offcanvasNavbar"
             aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
-                <h4 class="offcanvas-title" id="offcanvasNavbarLabel">Creative Recipes</h4>
+                <h4 class="offcanvas-title" id="offcanvasNavbarLabel"
+                    style="font-size: x-large; font-weight: 700; color: #fdb833;">Creative Recipes</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body">
+            <div class="offcanvas-body" style="border-bottom: 2px solid black; max-height: 175px;">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+                        <a class="nav-link active" aria-current="page" href="home.html"> <img src="house.svg" alt=""
+                                style="margin-right: 10px;"> Home </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="account.html">Account</a>
+                        <a class="nav-link active" aria-current="page" href="account.html"> <img src="person-2.svg"
+                                alt="" style="margin-right: 5px;"> Account</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="recipeBook.html">Recipe book</a>
+                        <a class="nav-link active" aria-current="page" href="recipeBook.html"> <img src="book.svg"
+                                alt="" style="margin-right: 5px;"> Recipe book</a>
                     </li>
-
                 </ul>
             </div>
         </div>
@@ -143,15 +149,16 @@
                 <div class="position-absolute end-0"><img id="flag" src="" style="width: 80px" alt=""></div>
             </div>
         </div>
-        <div class="row ">
+        <div class="row rounded p-5" style="background-color: whitesmoke;">
             <div id="colImg" class="col">
                 <img id="mainImg" class="rounded shadow" style="width: 500px;" src="" alt="">
             </div>
-            <div id="colIngr" class="col">
+            <div id="colIngr" class="col" style="margin-left: 20px;">
                 <h3 style="font-weight: 600;">Ingredients</h3>
                 <ul id="listaIngredient" class="list-group list-group-flush"
-                    style="margin-top: 20px; font-size: small; overflow-y: auto; height: 450px;">
-                    <li id="ingredient" class="list-group-item d-none">An item</li>
+                    style="margin-top: 20px; font-size: small; overflow-y: scroll; height: 450px;">
+                    <li id="ingredient" class="list-group-item d-none" style="background-color: whitesmoke;">An item
+                    </li>
 
                 </ul>
             </div>
@@ -162,21 +169,27 @@
         <div class="row" style="display: flex;">
             <div class="col-8">
                 <h3 style="font-weight: 600;">Instructions</h3>
-                <ol id="listaInstruction" class="list-group list-group-flush"
+                <ol id="listaInstruction" class="list-group list-group-numbered list-group-flush"
                     style="margin-top: 20px; font-size: small;">
-                    <li id="instruction" class="list-group-item d-none">An item</li>
+                    <li id="instruction" class="list-group-item d-none" style="background-color: white;">An item</li>
                 </ol>
             </div>
             <div class="col-4" style="margin-top: 10px;">
                 <h4 style="font-weight: 600;">Other similar dishes</h4>
                 <div id="listaPiatti" class="card-container">
-
-                    <div id="masterPiatto" class="card col d-none" style="max-width: 150px;">
-                        <img src="" class="card-img-top" alt="..." style="width: 100%;">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
+                    <div id="masterPiatto" class="card mb-3 d-none" onclick="loadRecipe(event)">
+                        <div class="row g-0">
+                            <div class="col-md-5">
+                                <img src="..." class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-7">
+                                <div class="card-body" style="height: 100%; display: flex; align-items: center;">
+                                    <h5 class="card-title" style="font-size: medium; color: #fdb833;">Card title</h5>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
 
                 </div>
             </div>
@@ -201,7 +214,7 @@
                 </ul>
             </div>
             <div class="col">
-                <h5 style="font-weight: 600;">Stuffs:</h5>
+                <h5 style="font-weight: 600;">Stuffs</h5>
                 <ul class="list-group list-group-flush " style="background-color: whitesmoke;">
                     <li class="list-group-item"><a href="sign.html"><u>Registrati</u></a></li>
                     <li class="list-group-item"><a href="https://github.com/cril1n"><u>Credits</u></a></li>

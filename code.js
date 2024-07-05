@@ -17,6 +17,8 @@ function checkLog() {
 
 
 
+
+
 //HOME
 counter = 0;
 
@@ -47,7 +49,7 @@ function mostraCarosello(ricetta, counter) {
     var lista = document.getElementById('lista_carosello');
     var master = document.getElementById('master_carosello');
     var clone = master.cloneNode(true);
-    clone.id = 'carosello-' + ricetta.idMeal;
+    clone.id = ricetta.meals[0].idMeal;
     clone.querySelector('img').setAttribute('src', ricetta.meals[0].strMealThumb);
     clone.querySelector('h3').innerHTML = ricetta.meals[0].strMeal;
     clone.querySelector('p').innerHTML = ricetta.meals[0].strCategory;
@@ -65,7 +67,7 @@ async function mostraBreakfast(breakfast, counter) {
     var lista = document.getElementById('section_breakfast');
     var master = document.getElementById('master_breakfast');
     var clone = master.cloneNode(true);
-    clone.id = 'card-' + breakfast.meals[counter].idMeal;
+    clone.id = breakfast.meals[counter].idMeal;
     clone.querySelector('h5').innerHTML = breakfast.meals[counter].strMeal;
     clone.querySelector('img').setAttribute('src', breakfast.meals[counter].strMealThumb);
     url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=` + breakfast.meals[counter].idMeal;
@@ -83,7 +85,7 @@ async function mostraPasta(pasta, counter) {
     var lista = document.getElementById('section_pasta');
     var master = document.getElementById('master_pasta');
     var clone = master.cloneNode(true);
-    clone.id = 'card-' + pasta.meals[counter].idMeal;
+    clone.id = pasta.meals[counter].idMeal;
     clone.querySelector('h5').innerHTML = pasta.meals[counter].strMeal;
     clone.querySelector('img').setAttribute('src', pasta.meals[counter].strMealThumb);
     url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=` + pasta.meals[counter].idMeal;
@@ -96,11 +98,12 @@ async function mostraPasta(pasta, counter) {
         })
     lista.appendChild(clone);
 }
+
 async function mostraDessert(dessert, counter) {
     var lista = document.getElementById('section_dessert');
     var master = document.getElementById('master_dessert');
     var clone = master.cloneNode(true);
-    clone.id = 'card-' + dessert.meals[counter].idMeal;
+    clone.id = dessert.meals[counter].idMeal;
     clone.querySelector('h5').innerHTML = dessert.meals[counter].strMeal;
     clone.querySelector('img').setAttribute('src', dessert.meals[counter].strMealThumb);
     url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=` + dessert.meals[counter].idMeal;
@@ -210,20 +213,39 @@ function isValidPsw(str) {
 
 //RICETTE
 
+function searchRecipesCountry(event) {
+    var country = event.currentTarget.id
+    encodedSearchValue = encodeURIComponent(country);
+    window.location.href = `listaRicette.html?search=${encodedSearchValue}`;
+}
+
+function randomList() {
+    for (let i = 0; i < 8; i++) {
+        fetch(`https://www.themealdb.com/api/json/v1/1/random.php`)
+            .then(response => response.json())
+            .then(ricetta => caricaRicette1(ricetta))
+    }
+}
+
 function mostraRicetteInside() {
     document.getElementById('lista_ricette').innerHTML = "";
     param = document.getElementById('barraRicerca').value;
-    ricercaXNome(param);
-    ricercaXIniziale(param);
-    ricercaXIngrediente(param);
-    ricercaXCategoria(param);
-    ricercaXArea(param);
+    if (param == null || param == "") {
+        randomList();
+    } else {
+        ricercaXNome(param);
+        //ricercaXIniziale(param);
+        ricercaXIngrediente(param);
+        ricercaXCategoria(param);
+        ricercaXArea(param);
+    }
+
 }
 
 function mostraRicetteOutside(param) {
     document.getElementById('lista_ricette').innerHTML = "";
     ricercaXNome(param);
-    ricercaXIniziale(param);
+    // ricercaXIniziale(param);
     ricercaXIngrediente(param);
     ricercaXCategoria(param);
     ricercaXArea(param);
@@ -233,56 +255,49 @@ function ricercaXNome(param) {
     url = `https://www.themealdb.com/api/json/v1/1/search.php?s=` + param;
     fetch(url)
         .then(response => response.json())
-        .then(ricette => caricaRicette(ricette))
-        .catch(error => {
-            console.error('Errore:', error);
-        });
+        .then(ricette => caricaRicette1(ricette))
+
 }
 function ricercaXIniziale(param) {
     url = `https://www.themealdb.com/api/json/v1/1/search.php?f=` + param;
     fetch(url)
         .then(response => response.json())
-        .then(ricette => caricaRicette(ricette))
-        .catch(error => {
-            console.error('Errore:', error);
-        });
+        .then(ricette => caricaRicette1(ricette))
+
 }
 function ricercaXIngrediente(param) {
     url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=` + param;
     fetch(url)
         .then(response => response.json())
-        .then(ricette => caricaRicette(ricette))
-        .catch(error => {
-            console.error('Errore:', error);
-        });
+        .then(ricette => caricaRicette2(ricette))
+
 }
 function ricercaXCategoria(param) {
     url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=` + param;
     fetch(url)
         .then(response => response.json())
-        .then(ricette => caricaRicette(ricette))
-        .catch(error => {
-            console.error('Errore:', error);
-        });
+        .then(ricette => caricaRicette2(ricette))
+
 }
 function ricercaXArea(param) {
     url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=` + param;
     fetch(url)
         .then(response => response.json())
-        .then(ricette => caricaRicette(ricette))
-        .catch(error => {
-            console.error('Errore:', error);
-        });
+        .then(ricette => caricaRicette2(ricette))
+
 }
 
-function caricaRicette(ricette) {
+function caricaRicette1(ricette) {
     recipes = ricette.meals;
+    if (recipes == null) {
+        return
+    }
     var lista = document.getElementById('lista_ricette');
     var master = document.getElementById('master_recipe');
 
     recipes.forEach(recipe => {
         var clone = master.cloneNode(true);
-        clone.id = 'card-' + recipe.idMeal;
+        clone.id = recipe.idMeal;
         clone.querySelector('h5').innerHTML = recipe.strMeal;
         clone.querySelector('p').innerHTML = recipe.strInstructions.substring(0, 230) + "...";
         clone.querySelector('img').setAttribute('src', recipe.strMealThumb);
@@ -292,16 +307,78 @@ function caricaRicette(ricette) {
 
 }
 
+async function caricaRicette2(ricette) {
+    recipes = ricette.meals;
+
+    if (!recipes) {
+        return;
+    }
+
+    var lista = document.getElementById('lista_ricette');
+    var master = document.getElementById('master_recipe');
+
+    for (recipe of recipes) {
+        clone = master.cloneNode(true);
+        clone.id = recipe.idMeal;
+        clone.querySelector('h5').innerHTML = recipe.strMeal;
+        clone.querySelector('img').setAttribute('src', recipe.strMealThumb);
+
+        url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipe.idMeal}`;
+
+        try {
+            response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Fetch error');
+            }
+            infos = await response.json();
+
+            if (infos.meals && infos.meals.length > 0) {
+                instructions = infos.meals[0].strInstructions;
+                clone.querySelector('p').innerHTML = instructions ? instructions.substring(0, 230) + "..." : "No instructions available.";
+                clone.classList.remove('d-none');
+            } else {
+                console.error('No meal information available');
+                clone.querySelector('p').innerHTML = "No instructions available.";
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+            clone.querySelector('p').innerHTML = "Error loading instructions.";
+        }
+
+        lista.appendChild(clone);
+    }
+}
+
+
+
 
 //RICETTA
 
+function loadRecipe(event) {
+    var id = event.currentTarget.id
+    encodedSearchValue = encodeURIComponent(id);
+    window.location.href = `ricetta.html?search=${encodedSearchValue}`;
+}
+
 function caricaRicetta() {
-    fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=Venetian%20Duck%20Ragu')
-        .then(response => response.json())
-        .then(ricetta => mostraRicetta(ricetta))
-        .catch(error => {
-            console.error('Errore:', error);
-        });
+    var urlSearch = window.location.search;
+    hasParams = /\?.+=/.test(urlSearch);
+
+    if (hasParams) {
+        urlParams = new URLSearchParams(urlSearch);
+        id = urlParams.get('search');
+        fetch('https://www.themealdb.com/api/json/v1/1/lookup.php?i=' + id)
+            .then(response => response.json())
+            .then(ricetta => mostraRicetta(ricetta))
+            .catch(error => {
+                console.error('Errore:', error);
+            });
+    } else {
+        console.log('Id not found');
+    }
+
+
+
 }
 
 function mostraRicetta(ricetta) {
@@ -376,7 +453,7 @@ async function mostraPiatti(ricette) {
     ricette = ricette.meals
     ricette.forEach(meal => {
         var clone = master.cloneNode(true);
-        clone.id = 'card-' + meal.idMeal;
+        clone.id = meal.idMeal;
         clone.querySelector('h5').innerHTML = meal.strMeal;
         clone.querySelector('img').setAttribute('src', meal.strMealThumb);
         clone.classList.remove('d-none');
@@ -477,3 +554,9 @@ function bandiera(country) {
     }
     document.getElementById('flag').src = 'https://flagsapi.com/' + country + '/flat/64.png';
 }
+
+
+
+
+
+
