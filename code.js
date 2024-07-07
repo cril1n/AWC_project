@@ -51,14 +51,9 @@ function mostraCarosello(ricetta, counter) {
     var clone = master.cloneNode(true);
     clone.id = ricetta.meals[0].idMeal;
     clone.querySelector('img').setAttribute('src', ricetta.meals[0].strMealThumb);
-    clone.querySelector('h3').innerHTML = ricetta.meals[0].strMeal;
-    clone.querySelector('p').innerHTML = ricetta.meals[0].strCategory;
-    imagine = clone.querySelector('img').getAttribute('src');
+    clone.querySelector('#title').innerHTML = ricetta.meals[0].strMeal;
+    clone.querySelector('#subtitle').innerHTML = ricetta.meals[0].strCategory;
     clone.classList.remove('d-none');
-    clone.classList.add('carousel-item');
-    if (counter == 0) {
-        clone.classList.add('active');
-    }
     lista.appendChild(clone);
 
 }

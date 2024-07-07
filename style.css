@@ -23,8 +23,19 @@ body::-webkit-scrollbar {
     border: 1px solid #1B1A17;
 }
 
+#btn_search:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#signBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 #logo {
-    width: 35px;
+    width: 40px;
+    margin-left: 20px;
 }
 
 .card {
@@ -46,9 +57,31 @@ body::-webkit-scrollbar {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+
 .card-container::-webkit-scrollbar {
+    width: 12px;
+    /* Larghezza della scrollbar */
+    background-color: whitesmoke;
+    /* Colore di sfondo della scrollbar */
+}
+
+.card-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    /* Colore del "pollice" della scrollbar */
+    border-radius: 10px;
+    /* Angoli arrotondati del "pollice" */
+    border: 5px solid #f1f1f1;
+    /* Margine attorno al "pollice" per l'effetto di spazio */
+}
+
+.card-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+    /* Colore del "pollice" quando è in hover */
+}
+
+.card-container::-webkit-scrollbar-button {
     display: none;
-    /* Nasconde la barra di scorrimento per WebKit */
+    /* Nasconde le frecce */
 }
 
 .card-title {

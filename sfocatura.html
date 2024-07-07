@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel with Blurred Edges</title>
+    <style>
+      
+
+        .carousel-container {
+            position: relative;
+            width: 400px;
+            /* Larghezza del carosello */
+            overflow: hidden;
+            /* Nasconde il contenuto che esce dai bordi */
+        }
+
+
+
+    
+
+        /* Effetto sfocatura ai lati */
+        .carousel-container::before,
+        .carousel-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50px;
+            /* Larghezza della sfocatura */
+            pointer-events: none;
+            /* Permette cliccare attraverso la sfocatura */
+            z-index: 1;
+            /* Assicura che la sfocatura sia sopra il contenuto del carosello */
+        }
+
+        .carousel-container::before {
+            left: 0;
+            /* Posiziona la sfocatura a sinistra */
+            background: linear-gradient(to right, rgba(240, 240, 240, 1), rgba(240, 240, 240, 0));
+        }
+
+        .carousel-container::after {
+            right: 0;
+            /* Posiziona la sfocatura a destra */
+            background: linear-gradient(to left, rgba(240, 240, 240, 1), rgba(240, 240, 240, 0));
+        }
+    </style>
+</head>
+
+<body>
+    <div class="carousel-container">
+        <div class="carousel">
+            <div class="carousel-item">Item 1</div>
+            <div class="carousel-item">Item 2</div>
+            <div class="carousel-item">Item 3</div>
+            <!-- Aggiungi altri elementi del carosello come necessario -->
+        </div>
+    </div>
+</body>
+
+</html>
