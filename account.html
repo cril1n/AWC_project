@@ -4,18 +4,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Recipes</title>
+    <title>Account</title>
     <link rel="icon" href="miniLOGO.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <script src="code.js"></script>
     <style>
-        .card {
-            margin: 30px;
-        }
-    </style>
 
+    </style>
 </head>
 
 <body>
@@ -25,14 +22,13 @@
                 <a href="home.html" class="navbar-brand"><img id="logo" src="LOGO.png" alt=""></a>
             </div>
             <div class="col-sm-6 text-center">
-                <form onsubmit="return false">
-                    <div class="d-flex" role="search">
-                        <input id="barraRicerca" class="form-control me-2 focus-ring focus-ring-secondary rounded-5"
-                            style="border: 0px solid white;" type="search" placeholder="Search for a recipe!"
-                            aria-label="Search">
-                        <button onclick="mostraRicetteInside()" id="bottoneRicerca" class="btn rounded-5"
-                            style="border: 0px solid white; background-color: #fdb833; color: black;">Search</button>
-                    </div>
+                <form class="d-flex" role="search" onsubmit="return cercaRicette(event)">
+                    <input class="form-control me-2 focus-ring focus-ring-secondary rounded-5"
+                        style="border: 0px solid white;" type="search" placeholder="Search for a recipe!"
+                        aria-label="Search" id="searchInput">
+                    <button class="btn rounded-5"
+                        style="border: 0px solid white; background-color: #fdb833; color: black;" id="btn_search"
+                        type="submit">Search</button>
                 </form>
             </div>
             <div class="col text-end">
@@ -60,8 +56,8 @@
                                 style="margin-right: 10px;"> Home </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="account.html"> <img src="person-2.svg"
-                                alt="" style="margin-right: 5px;"> Account</a>
+                        <a class="nav-link active" aria-current="page" href="home.html" onclick="logOut()"> <img
+                                src="person-2.svg" alt="" style="margin-right: 5px;"> Log out</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="recipeBook.html"> <img src="book.svg"
@@ -84,65 +80,66 @@
         </div>
     </nav>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Insert your data:</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="container-fluid" style="width: 65%; margin-top: 40px;">
+        <h1 id="user" style="font-size: 4em; font-weight: 900;"></h1>
+        <div class="row rounded-2 p-3"
+            style="background-color: whitesmoke; margin-top: 30px; margin-bottom: 40px; height: 500px;">
+            <div class="col-4 p-4" style=" border-right: 1px solid lightgray; ">
+                <ul class="list-group list-group-flush rounded" style="font-size: x-large;">
+                    <button type="button" class="list-group-item list-group-item-action"
+                        style="background-color: lightgray;">Personal info</button>
+                    <button type="button" class="list-group-item list-group-item-action">Delete the account</button>
+                    <button type="button" class="list-group-item list-group-item-action">Recipe book</button>
+                </ul>
+            </div>
+            <div class="col-8">
+                <div id="info" class="d-non p-3">
+                    <form>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastname" class="form-label">Lastname</label>
+                            <input type="text" class="form-control" id="lastname" disabled>
+                        </div>
+                        <button id="modifyBtn" type="submit" class="btn"
+                            style="background-color: #fdb833; margin-right: 10px;">Modify</button>
+                    </form>
                 </div>
-                <form>
-                    <div class="modal-body">
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control focus-ring focus-ring-warning" id="email"
-                                style="border: 1px solid lightgray;" placeholder="name@example.com" required>
-                            <label for="email">Email address</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="password" class="form-control focus-ring focus-ring-warning" id="password"
-                                style="border: 1px solid lightgray;" placeholder="Password" required>
-                            <label for="password1">Password</label>
-                        </div>
-                        <div style="text-align: right;">
-                            <button type="submit" onclick="logIn()" class="btn" style="background-color: #fdb833;">Log
-                                in</button>
-                        </div>
-                    </div>
-                    <div class="modal-body" style="text-align: center; border-top: 1px solid lightgray;">
-                        <a href="sign.html" class="link-underline-light"
-                            style="color: #333333; font-weight: 600;">Create a new
-                            account!</a>
-                    </div>
-                </form>
+                <div id="delete" class="d-none"></div>
             </div>
         </div>
     </div>
 
 
-    <div id="lista_ricette" class="container-fluid"
-        style="padding: 30px; display: flex; flex-wrap: wrap; margin-left: 30px;">
 
 
-    </div>
 
-    <div id="master_recipe" class="card d-none"
-        style="max-width: 600px; min-width: 600px; background-color: whitesmoke;" onclick="loadRecipe(event)">
-        <div class="row g-0">
-            <div class="col-md-6">
-                <img src="" class="img-fluid rounded-start" alt="...">
-            </div>
-            <div class="col-md-6">
-                <div class="card-body">
-                    <h5 style="color: #fdb833;" class="card-title">Card title</h5>
-                    <p style="color: gray; font-size: medium;" class="card-text"></p>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+
+
+
+
+
+
+
+
+
 
     <div class="container-fluid"
-        style="background-color: whitesmoke; padding-bottom: 40px; text-align: center; box-shadow: 0px -10px 10px -10px lightgray;">
-        <div class="row w-75" style="text-align: center; padding-top: 40px; margin-left: 160px;">
+        style="background-color: whitesmoke; padding-top: 40px; padding-bottom: 40px; text-align: center;">
+        <div class="row w-75"
+            style="text-align: center; border-top: 1px solid lightgray; padding-top: 40px; margin-left: 160px;">
             <div class="col"><img src="LOGO.png" alt="" style="height: 150px;"></div>
             <div class="col">
                 <h5 style="font-weight: 600;">Follow us on </h5>
@@ -170,20 +167,47 @@
 
 
     <script>
+        /*
+        if (sessionStorage.getItem('log') == null) {
+            window.location.href = 'home.html';
+        }*/
+
         checkLog();
 
-        const urlSearch = window.location.search;
+        function cercaRicette(event) {
+            event.preventDefault();
 
-        // Verifica se l'URL contiene parametri di query usando regex
-        const hasParams = /\?.+=/.test(urlSearch); // Cerca "?" seguito da almeno un carattere "="
+            searchValue = document.getElementById('searchInput').value;
+            let encodedSearchValue = encodeURIComponent(searchValue);
 
-        if (hasParams) {
-            urlParams = new URLSearchParams(urlSearch);
-            mostraRicetteOutside(urlParams.get('search'));
-        } else {
-            randomList();
+            window.location.href = `listaRicette.html?search=${encodedSearchValue}`;
+
+            return false;
         }
 
+        mail = sessionStorage.getItem('log');
+        users = JSON.parse(localStorage.getItem('utenti'));
+        user = users.find(user => user.email === mail);
+
+        document.getElementById('user').innerHTML = 'Hello ' + user.username + '!';
+        document.getElementById('email').placeholder = user.email;
+        document.getElementById('username').placeholder = user.username;
+        document.getElementById('name').placeholder = user.name;
+        document.getElementById('lastname').placeholder = user.lastname;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const buttons = document.querySelectorAll('.list-group-item-action');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Reset the background color of all buttons
+                    buttons.forEach(btn => btn.style.backgroundColor = 'whitesmoke');
+
+                    // Set the background color of the clicked button to lightgray
+                    this.style.backgroundColor = 'lightgray';
+                });
+            });
+        });
 
     </script>
 

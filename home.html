@@ -59,7 +59,7 @@
     }
 
     .swiper-slide:hover {
-      transform: scale(1.05);
+      transform: scale(1.10);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
@@ -113,7 +113,7 @@
       position: relative;
     }
 
- 
+
     /* Effetto sfocatura ai lati */
     #section::before,
     #section::after {
@@ -190,6 +190,17 @@
             <a class="nav-link active" aria-current="page" href="recipeBook.html"> <img src="book.svg" alt=""
                 style="margin-right: 5px;"> Recipe book</a>
           </li>
+        </ul>
+      </div>
+      <div class="offcanvas-body">
+        <h5 style="font-weight: 700;"> Search by category: </h5>
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" style="list-style-type: disc; margin-left: 20px;">
+          <li><button class="btn" onclick="searchRecipes('Beef')"> Beef </button></li>
+          <li><button class="btn" onclick="searchRecipes('Chicken')"> Chicken </button></li>
+          <li><button class="btn" onclick="searchRecipes('Seafood')"> Seafood </button></li>
+          <li><button class="btn" onclick="searchRecipes('Starter')"> Starter </button></li>
+          <li><button class="btn" onclick="searchRecipes('Side')"> Side </button></li>
+          <li><button class="btn" onclick="searchRecipes('Dessert')"> Dessert </button></li>
         </ul>
       </div>
     </div>
@@ -337,7 +348,7 @@
   <!-- Initialize Swiper -->
   <script>
     var swiper = new Swiper(".mySwiper", {
-      effect : 'coverflow',
+      effect: 'coverflow',
       coverflowEffect: {
         rotate: 10,
         stretch: 30,
@@ -347,9 +358,9 @@
       },
       centeredSlides: true,
       autoplay: {
-        delay: 10000,
+        delay: 5000,
       },
-      mousewheel: true,
+      mousewheel: false,
       slidesPerView: "auto",
       spaceBetween: 30,
       pagination: {

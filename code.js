@@ -139,10 +139,16 @@ function logIn() {
     return true;
 }
 
+function logOut() {
+    sessionStorage.removeItem('log')
+    return true;
+}
+
 function salvaUtente() {
     nome = document.getElementById('name').value;
     cognome = document.getElementById('lastname').value;
     mail = document.getElementById('email').value;
+    usern = document.getElementById('username').value;
     psw1 = document.getElementById('password1').value;
     psw2 = document.getElementById('password2').value;
 
@@ -152,6 +158,10 @@ function salvaUtente() {
     }
     if (!isNonEmptyString(cognome)) {
         alert('Insert a valid lastname!')
+        return false;
+    }
+    if (!isNonEmptyString(usern)) {
+        alert('Insert a valid username!')
         return false;
     }
     if (!isValidEmail(mail)) {
@@ -171,6 +181,7 @@ function salvaUtente() {
         name: nome,
         lastname: cognome,
         email: mail,
+        username: usern,
         psw: psw1,
         ricettario: [],
         note: [],
@@ -211,6 +222,11 @@ function isValidPsw(str) {
 function searchRecipesCountry(event) {
     var country = event.currentTarget.id
     encodedSearchValue = encodeURIComponent(country);
+    window.location.href = `listaRicette.html?search=${encodedSearchValue}`;
+}
+
+function searchRecipes(cat) {
+    encodedSearchValue = encodeURIComponent(cat);
     window.location.href = `listaRicette.html?search=${encodedSearchValue}`;
 }
 

@@ -115,6 +115,12 @@ a {
     font-weight: 600;
 }
 
+li .btn {
+    font-size: medium;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
 /* HOME*/
 
 #corpoHome {
