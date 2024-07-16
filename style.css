@@ -43,19 +43,6 @@ body::-webkit-scrollbar {
     margin-left: 20px;
 }
 
-.card {
-    flex-shrink: 0;
-    white-space: wrap;
-    min-width: 300px;
-    max-width: 300px;
-    margin-top: 20px;
-    border: 0px solid white;
-    text-align: left;
-    justify-content: flex-end;
-    transition: transform 0.2s, box-shadow 0.2s;
-    cursor: pointer;
-    margin: 20px;
-}
 
 .card:hover {
     transform: scale(1.05);

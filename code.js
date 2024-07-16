@@ -136,6 +136,8 @@ function logIn() {
         alert('Password o email errate.')
         return false;
     }
+    let currentUrl = window.location.href;
+    window.location.href = currentUrl;
     return true;
 }
 
@@ -184,7 +186,7 @@ function salvaUtente() {
         username: usern,
         psw: psw1,
         ricettario: [],
-        note: [],
+        note: {},
     }
 
 
@@ -363,6 +365,101 @@ async function caricaRicette2(ricette) {
 
 
 //RICETTA
+
+function addToRecipeBook() {
+    var urlSearch = window.location.search;
+    hasParams = /\?.+=/.test(urlSearch);
+    if (hasParams) {
+        urlParams = new URLSearchParams(urlSearch);
+        id = urlParams.get('search');
+
+        if (sessionStorage.getItem('log')) {
+            // Se è impostato, recuperiamo il suo valore
+            mail = sessionStorage.getItem('log');
+        } else {
+            alert('You must be logged before.');
+            return;
+        }
+        users = JSON.parse(localStorage.getItem('utenti'));
+        user = users.find(user => user.email === mail);
+
+        ricettario = user.ricettario;
+        ricettario.push(id);
+        user.ricettario = ricettario;
+
+        userIndex = users.findIndex(u => u.email === mail);
+        users[userIndex] = user;
+        localStorage.setItem('utenti', JSON.stringify(users));
+
+        document.getElementById('btn_cuore').classList.add('d-none');
+        document.getElementById('btn_remove_cuore').classList.remove('d-none');
+    } else {
+        console.log('Id not found');
+    }
+
+}
+
+function removeFromRecipeBook() {
+    var urlSearch = window.location.search;
+    hasParams = /\?.+=/.test(urlSearch);
+    if (hasParams) {
+        urlParams = new URLSearchParams(urlSearch);
+        id = urlParams.get('search');
+
+        if (sessionStorage.getItem('log')) {
+            // Se è impostato, recuperiamo il suo valore
+            mail = sessionStorage.getItem('log');
+        } else {
+            alert('You must be logged before.');
+            return;
+        }
+        users = JSON.parse(localStorage.getItem('utenti'));
+        user = users.find(user => user.email === mail);
+
+        ricettario = user.ricettario;
+        ricettario = ricettario.filter(item => item !== id);
+        user.ricettario = ricettario;
+
+        userIndex = users.findIndex(u => u.email === mail);
+        users[userIndex] = user;
+        localStorage.setItem('utenti', JSON.stringify(users));
+
+        document.getElementById('btn_remove_cuore').classList.add('d-none');
+        document.getElementById('btn_cuore').classList.remove('d-none');
+    } else {
+        console.log('Id not found');
+    }
+
+}
+
+function checkRicettario() {
+    if (sessionStorage.getItem('log')) {
+        // Se è impostato, recuperiamo il suo valore
+        mail = sessionStorage.getItem('log');
+    } else {
+        return;
+    }
+    var urlSearch = window.location.search;
+    hasParams = /\?.+=/.test(urlSearch);
+
+    if (hasParams) {
+        urlParams = new URLSearchParams(urlSearch);
+        id = urlParams.get('search');
+
+        users = JSON.parse(localStorage.getItem('utenti'));
+        user = users.find(user => user.email === mail);
+        ricettario = user.ricettario;
+
+        if (ricettario.includes(id)) {
+            document.getElementById('btn_cuore').classList.add('d-none');
+            document.getElementById('btn_remove_cuore').classList.remove('d-none');
+        } else {
+            document.getElementById('btn_remove_cuore').classList.add('d-none');
+            document.getElementById('btn_cuore').classList.remove('d-none');
+        }
+
+    }
+}
 
 function loadRecipe(event) {
     var id = event.currentTarget.id
@@ -578,6 +675,39 @@ function accountDel() {
 
     window.location.href = 'home.html';
     alert('User successfully deleted!')
+}
+
+//RICETTARIO
+
+function caricaRicettario() {
+    mail = sessionStorage.getItem('log');
+    users = JSON.parse(localStorage.getItem('utenti'));
+    user = users.find(user => user.email === mail);
+
+    ricettario = user.ricettario;
+    ricettario.forEach(id => {
+        url = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=' + id
+        fetch(url)
+            .then(response => response.json())
+            .then(ricetta => mostraRicettario(ricetta, user))
+    });
+}
+
+function mostraRicettario(ricetta, user) {
+    var lista = document.getElementById('lista_ricettario');
+    var master = document.getElementById('master_ricettario');
+    ricetta = ricetta.meals[0];
+    var clone = master.cloneNode(true);
+    clone.id = ricetta.idMeal;
+    clone.querySelector('h2').innerHTML = ricetta.strMeal;
+   // clone.querySelector('h3').innerHTML = ricetta.strCategory;
+    clone.querySelector('img').setAttribute('src', ricetta.strMealThumb);
+    if (ricetta.idMeal in user.note) {
+        clone.querySelector('ul').innerHTML = "";
+        clone.querySelector('ul').innerHTML += "<li>" + user.note[ricetta.idMeal] + "</li>";
+    }
+    clone.classList.remove('d-none');
+    lista.appendChild(clone);
 }
 
 

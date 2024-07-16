@@ -11,7 +11,18 @@
     <link rel="stylesheet" href="style.css">
     <script src="code.js"></script>
     <style>
+        
         .card {
+            flex-shrink: 0;
+            white-space: wrap;
+            min-width: 300px;
+            max-width: 300px;
+            margin-top: 20px;
+            border: 0px solid white;
+            text-align: left;
+            justify-content: flex-end;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
             margin: 30px;
         }
     </style>
@@ -64,7 +75,7 @@
                                 alt="" style="margin-right: 5px;"> Account</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="recipeBook.html"> <img src="book.svg"
+                        <a class="nav-link active" aria-current="page" href="ricettario.html"> <img src="book.svg"
                                 alt="" style="margin-right: 5px;"> Recipe book</a>
                     </li>
                 </ul>
