@@ -87,14 +87,15 @@
             <div class="col-4 p-4" style=" border-right: 1px solid lightgray; ">
                 <ul class="list-group list-group-flush rounded" style="font-size: x-large;">
                     <button type="button" class="list-group-item list-group-item-action"
-                        style="background-color: lightgray;">Personal info</button>
-                    <button type="button" class="list-group-item list-group-item-action">Delete the account</button>
+                        style="background-color: lightgray;" onclick="showInfo()">Personal info</button>
+                    <button type="button" class="list-group-item list-group-item-action" onclick="showDel()">Delete the
+                        account</button>
                     <button type="button" class="list-group-item list-group-item-action">Recipe book</button>
                 </ul>
             </div>
             <div class="col-8">
-                <div id="info" class="d-non p-3">
-                    <form>
+                <div id="info" class="p-3">
+                    <form onsubmit="event.preventDefault()">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" disabled>
@@ -111,11 +112,20 @@
                             <label for="lastname" class="form-label">Lastname</label>
                             <input type="text" class="form-control" id="lastname" disabled>
                         </div>
-                        <button id="modifyBtn" type="submit" class="btn"
-                            style="background-color: #fdb833; margin-right: 10px;">Modify</button>
+                        <div style="text-align: right;">
+                            <button id="modifyBtn2" class="btn btn-lg d-none" onclick="modify()"
+                                style="background-color: #fdb833; margin-top: 10px;"> Confirm
+                                changes</button>
+                            <button id="modifyBtn1" class="btn btn-lg" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal"
+                                style="background-color: #fdb833; margin-top: 10px;">Modify</button>
+                        </div>
                     </form>
                 </div>
-                <div id="delete" class="d-none"></div>
+                <div id="delete" class="p-3 d-none" style="position: relative; height: 100%;">
+                    <h4>Are you sure do you want to delete your account? <br> You will lose your recipe book with all your notes.</h4>
+                    <button class="btn btn-lg btn-danger" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" onclick="accountDel()"> DELETE</button>
+                </div>
             </div>
         </div>
     </div>
@@ -163,14 +173,38 @@
         </div>
     </div>
 
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Insert your password before</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="event.preventDefault()">
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control focus-ring focus-ring-warning" id="password"
+                                style="border: 1px solid lightgray;" placeholder="Password" required>
+                            <label for="password1">Password</label>
+                        </div>
+                        <div style="text-align: right;">
+                            <button class="btn" style="background-color: #fdb833;" onclick="checkPsw()"
+                                data-bs-dismiss="modal">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
 
     <script>
-        /*
+        
         if (sessionStorage.getItem('log') == null) {
             window.location.href = 'home.html';
-        }*/
+        }
 
         checkLog();
 
@@ -190,10 +224,10 @@
         user = users.find(user => user.email === mail);
 
         document.getElementById('user').innerHTML = 'Hello ' + user.username + '!';
-        document.getElementById('email').placeholder = user.email;
-        document.getElementById('username').placeholder = user.username;
-        document.getElementById('name').placeholder = user.name;
-        document.getElementById('lastname').placeholder = user.lastname;
+        document.getElementById('email').value = user.email;
+        document.getElementById('username').value = user.username;
+        document.getElementById('name').value = user.name;
+        document.getElementById('lastname').value = user.lastname;
 
         document.addEventListener('DOMContentLoaded', function () {
             const buttons = document.querySelectorAll('.list-group-item-action');
@@ -209,7 +243,82 @@
             });
         });
 
+        function showInfo() {
+            document.getElementById('delete').classList.add('d-none');
+            document.getElementById('info').classList.remove('d-none');
+        }
+        function showDel() {
+            document.getElementById('info').classList.add('d-none');
+            document.getElementById('delete').classList.remove('d-none');
+        }
+
+        function checkPsw() {
+            pass = document.getElementById('password').value;
+            if (pass != user.psw) {
+                alert('Password errata.');
+                return;
+            } else {
+                document.getElementById('email').removeAttribute('disabled');
+                document.getElementById('username').removeAttribute('disabled');
+                document.getElementById('name').removeAttribute('disabled');
+                document.getElementById('lastname').removeAttribute('disabled');
+                document.getElementById('modifyBtn2').classList.remove('d-none');
+                document.getElementById('modifyBtn1').classList.add('d-none');
+            }
+        }
+
+        function modify() {
+            newMail = document.getElementById('email').value;
+            newUsr = document.getElementById('username').value;
+            newName = document.getElementById('name').value;
+            newLname = document.getElementById('lastname').value;
+
+            if (!isNonEmptyString(newName)) {
+                alert('Insert a valid name!')
+                return false;
+            }
+            if (!isNonEmptyString(newLname)) {
+                alert('Insert a valid lastname!')
+                return false;
+            }
+            if (!isNonEmptyString(newUsr)) {
+                alert('Insert a valid username!')
+                return false;
+            }
+            if (!isValidEmail(newMail)) {
+                alert('Insert a valid email!')
+                return false;
+            }
+
+            user.name = newName;
+            user.lastname = newLname;
+            user.email = newMail;
+            user.username = newUsr;
+            localStorage.setItem('utenti', JSON.stringify(users))
+
+            document.getElementById('modifyBtn2').classList.add('d-none');
+            document.getElementById('modifyBtn1').classList.remove('d-none');
+            document.getElementById('email').setAttribute('disabled', true);
+            document.getElementById('username').setAttribute('disabled', true);
+            document.getElementById('name').setAttribute('disabled', true);
+            document.getElementById('lastname').setAttribute('disabled', true);
+
+            alert('Data modified!')
+
+        }
+
+        function isNonEmptyString(str) {
+            return /^.+$/.test(str);
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[\w\.\-]+@[a-zA-Z\d\.\-]+\.[a-zA-Z]{2,}$/;
+            return emailRegex.test(email);
+        }
+
     </script>
+
+
 
 
 

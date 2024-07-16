@@ -196,7 +196,6 @@ function salvaUtente() {
     } else {
         utenti.push(nuovoUtente)
         localStorage.setItem('utenti', JSON.stringify(utenti))
-        sessionStorage.setItem('log', email)
         alert('Account created!')
     }
     return true;
@@ -567,7 +566,19 @@ function bandiera(country) {
 }
 
 
+//ACCOUNT
 
+function accountDel() {
+    mail = sessionStorage.getItem('log');
+    users = JSON.parse(localStorage.getItem('utenti'));
+
+    users = users.filter(user => user.email !== mail);
+    localStorage.setItem('utenti', JSON.stringify(users));
+    sessionStorage.removeItem('log');
+
+    window.location.href = 'home.html';
+    alert('User successfully deleted!')
+}
 
 
 

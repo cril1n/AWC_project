@@ -33,6 +33,11 @@ body::-webkit-scrollbar {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+#modifyBtn1:hover, #modifyBtn2:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 #logo {
     width: 40px;
     margin-left: 20px;
