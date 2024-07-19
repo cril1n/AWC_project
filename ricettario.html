@@ -63,7 +63,17 @@
             background-color: rgba(0, 0, 0, 0);
         }
 
+        .btn_cancel {
+            --bs-btn-hover-color: rgba(0, 0, 0, 0);
+            --bs-btn-active-color: rgba(0, 0, 0, 0);
+            background-color: rgba(0, 0, 0, 0);
+        }
+
         .btn_note:hover {
+            transform: scale(1.2);
+        }
+
+        .btn_cancel:hover {
             transform: scale(1.2);
         }
     </style>
@@ -135,23 +145,34 @@
     </nav>
 
     <div class="wrapper">
+        <div id="ricettario_vuoto" class="container-fluid" style="width: 80%; margin-top: 40px;">
+            <div style="font-size: 3em;">This is your recipe book!</div>
+            <div style="font-size: 2em;">When you save dishes you will find them here.</div>
+        </div>
+
+
         <div id="lista_ricettario" class="container-fluid"
             style="display: flex; justify-content: center; width: 90%; flex-wrap: wrap; margin-top: 20px;">
 
-            <div id="master_ricettario" class="card mb-3 d-none" onclick="loadRecipe(event)"
+            <div id="master_ricettario" class="card mb-3 d-none"
                 style="position: relative; background-color: whitesmoke; border: 0px solid white; min-width: 900px; max-width: 900px; min-height: 375px; max-height: 375px; margin-top: 20px;">
+
                 <div class="row g-0">
                     <div class="col-md-5">
                         <img src="..." class="img-fluid rounded-start" alt="...">
                     </div>
                     <div class="col-md-7">
                         <div class="card-body p-4" style="height: 375px; ">
+
                             <h2 class="card-title"
                                 style="font-size: x-large; font-weight: 900; color: #fdb833; width: 450px;">Card
                                 title</h2>
-                            <button class="btn btn_note" onclick="handleButtonClick(event)"
+                            <button class="btn btn_note"
                                 style="position: absolute; top: 18px; right: 20px; z-index: 2;"><img src="penna.svg"
                                     alt="" data-bs-toggle="tooltip" title="Add a note!"></button>
+                            <button class="btn btn_cancel" style="position: absolute; top: 7px; left: 7px;"><img
+                                    src="cancel.svg" alt="" data-bs-toggle="tooltip"
+                                    title="Remove from recipe book"></button>
                             <div class="card-text"
                                 style="border-top: 2px solid black; height: 250px; padding-top: 10px;">
                                 <h5 style="font-weight: 600; font-size: medium;">Your notes:</h5>
@@ -168,7 +189,7 @@
         </div>
 
         <div class="modal fade" id="noteModal" tabindex="-1" aria-labelledby="noteModalLabel" aria-hidden="true">
-            <div class="modal-dialog" >
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="noteModalLabel">Note: </h1>
@@ -176,12 +197,13 @@
                     </div>
                     <div class="modal-body">
                         <div>
-                            <textarea  class="form-control focus-ring focus-ring-warning border" placeholder="Write down your note!" id="textarea"
-                                style="height: 100px"></textarea>
+                            <textarea class="form-control focus-ring focus-ring-warning border"
+                                placeholder="Write down your note!" id="textarea" style="height: 100px"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="saveNote_btn" type="button" class="btn" style="background-color: #fdb833;" onclick="addNote()" data-bs-dismiss="modal">Save changes</button>
+                        <button id="saveNote_btn" type="button" class="btn" style="background-color: #fdb833;"
+                            onclick="addNote()" data-bs-dismiss="modal">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -233,8 +255,6 @@
     <script>
 
 
-
-        
         if (sessionStorage.getItem('log') == null) {
             window.location.href = 'home.html';
         }
@@ -256,10 +276,14 @@
 
         function handleButtonClick(event) {
             event.stopPropagation(); // Previene la propagazione dell'evento al contenitore
-            openNote(event); // Chiama la funzione addNote
+            var id = event.currentTarget.id;
+
+            if (id.substring(0, 8) === "btn_note") {
+                openNote(id.substring(9));
+            } else if (id.substring(0, 10) === "btn_cancel") {
+                removeRecipe(id.substring(11));
+            }
         }
-
-
 
 
     </script>

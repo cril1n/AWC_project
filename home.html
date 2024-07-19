@@ -364,19 +364,19 @@
     var swiper = new Swiper(".mySwiper", {
       effect: 'coverflow',
       coverflowEffect: {
-        rotate: 10,
+        rotate: 20,
         stretch: 30,
         depth: 100,
         modifier: 1,
         slideShadows: true,
       },
-      centeredSlides: true,
+      //centeredSlides: true,
       autoplay: {
-        delay: 5000,
+        delay: 2500,
+        disableOnInteraction: false,
       },
-      mousewheel: false,
       slidesPerView: "auto",
-      spaceBetween: 30,
+      spaceBetween: 10,
       pagination: {
         dynamicBullets: true,
         el: ".swiper-pagination",

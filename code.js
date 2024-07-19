@@ -136,8 +136,7 @@ function logIn() {
         alert('Password o email errate.')
         return false;
     }
-    let currentUrl = window.location.href;
-    window.location.href = currentUrl;
+
     return true;
 }
 
@@ -525,7 +524,6 @@ function mostraRicetta(ricetta) {
     text = ricetta.strInstructions;
     for (let char of text) {
         instruction += char;
-        //console.log(char);
         if (char == '.' || char == ';') {
             var clone = master.cloneNode(true);
             clone.innerHTML = instruction;
@@ -688,12 +686,15 @@ function caricaRicettario() {
     user = users.find(user => user.email === mail);
 
     ricettario = user.ricettario;
-    ricettario.forEach(id => {
-        url = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=' + id
-        fetch(url)
-            .then(response => response.json())
-            .then(ricetta => mostraRicettario(ricetta, user))
-    });
+    if (ricettario.length > 0) {
+        document.getElementById('ricettario_vuoto').classList.add("d-none");
+        ricettario.forEach(id => {
+            url = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=' + id
+            fetch(url)
+                .then(response => response.json())
+                .then(ricetta => mostraRicettario(ricetta, user))
+        });
+    }
 
 }
 
@@ -706,7 +707,9 @@ function mostraRicettario(ricetta, user) {
     clone.querySelector('h2').innerHTML = ricetta.strMeal;
     // clone.querySelector('h3').innerHTML = ricetta.strCategory;
     clone.querySelector('img').setAttribute('src', ricetta.strMealThumb);
-    clone.querySelector('button').id = ricetta.idMeal;
+    buttons = clone.querySelectorAll('button');
+    buttons[0].id = "btn_note_" + ricetta.idMeal;
+    buttons[1].id = "btn_cancel_" + ricetta.idMeal;
     if (ricetta.idMeal in user.note) {
         clone.querySelector('ul').innerHTML = "";
         clone.querySelector('ul').classList.add('list-group-numbered');
@@ -714,32 +717,31 @@ function mostraRicettario(ricetta, user) {
         listaNote.forEach(nota => {
             clone.querySelector('ul').innerHTML += "<li class='list-group-item'>" + nota + "</li>";
         });
-        
+
     }
     clone.classList.remove('d-none');
     lista.appendChild(clone);
+    document.getElementById("btn_note_" + ricetta.idMeal).addEventListener("click", handleButtonClick);
+    document.getElementById("btn_cancel_" + ricetta.idMeal).addEventListener("click", handleButtonClick);
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 }
 
-function openNote(event) {
-    var id = event.currentTarget.id
+function openNote(id) {
     sessionStorage.setItem('noteID', id);
-
     var modal1 = new bootstrap.Modal(document.getElementById('noteModal'));
     modal1.toggle();
-
 }
 
 function addNote() {
     id = sessionStorage.getItem('noteID');
     var nota = document.getElementById('textarea').value;
-    
+
     mail = sessionStorage.getItem('log');
     users = JSON.parse(localStorage.getItem('utenti'));
     user = users.find(user => user.email === mail);
     if (id in user.note) {
-        listaNote = user.note[id]; 
+        listaNote = user.note[id];
         listaNote.push(nota);
         user.note[id] = listaNote;
     } else {
@@ -750,5 +752,23 @@ function addNote() {
 
     sessionStorage.removeItem('noteID');
     currentUrl = window.location.href;
+    window.location.href = currentUrl;
+}
+
+function removeRecipe(id) {
+    users = JSON.parse(localStorage.getItem('utenti'));
+    user = users.find(user => user.email === mail);
+
+    ricettario = user.ricettario;
+    ricettario = ricettario.filter(item => item !== id);
+    user.ricettario = ricettario;
+    note = user.note;
+    delete note[id];
+    user.note = note;
+
+    userIndex = users.findIndex(u => u.email === mail);
+    users[userIndex] = user;
+    localStorage.setItem('utenti', JSON.stringify(users));
+    let currentUrl = window.location.href;
     window.location.href = currentUrl;
 }
