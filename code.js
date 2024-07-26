@@ -4,6 +4,12 @@ if (localStorage.getItem('utenti') == null) {
     localStorage.setItem('utenti', utentiStr);
 }
 
+if (localStorage.getItem('recensioni') == null) {
+    recensioni = [];
+    recensioniStr = JSON.stringify(recensioni);
+    localStorage.setItem('recensioni', recensioniStr);
+}
+
 function checkLog() {
     if (sessionStorage.getItem('log') == null) {
         document.getElementById('menuLogo').classList.add('d-none');
@@ -136,8 +142,8 @@ function logIn() {
         alert('Password o email errate.')
         return false;
     }
-
-    return true;
+    currentUrl = window.location.href;
+    window.location.href = currentUrl;
 }
 
 function logOut() {
@@ -260,6 +266,17 @@ function mostraRicetteOutside(param) {
     ricercaXIngrediente(param);
     ricercaXCategoria(param);
     ricercaXArea(param);
+}
+
+function cercaRicette(event) {
+    event.preventDefault();
+
+    searchValue = document.getElementById('searchInput').value;
+    let encodedSearchValue = encodeURIComponent(searchValue);
+
+    window.location.href = `listaRicette.html?search=${encodedSearchValue}`;
+
+    return false;
 }
 
 function ricercaXNome(param) {
@@ -540,8 +557,9 @@ function mostraRicetta(ricetta) {
 
 function impostaAltezza() {
     var colIst = document.getElementById('listaInstruction');
+    var colRec = document.getElementById('boxRecensioni');
     var colPiat = document.getElementById('listaPiatti');
-    var colHeight = colIst.offsetHeight;
+    var colHeight = colIst.offsetHeight + colRec.offsetHeight + 20;
     colPiat.style.height = colHeight + 'px';
 }
 
@@ -669,10 +687,16 @@ function bandiera(country) {
 function accountDel() {
     mail = sessionStorage.getItem('log');
     users = JSON.parse(localStorage.getItem('utenti'));
+    reviews = JSON.parse(localStorage.getItem('recensioni'))
+
 
     users = users.filter(user => user.email !== mail);
     localStorage.setItem('utenti', JSON.stringify(users));
     sessionStorage.removeItem('log');
+
+    reviews = reviews.filter(review => review.email !== mail);
+    localStorage.setItem('recensioni', JSON.stringify(reviews));
+
 
     window.location.href = 'home.html';
     alert('User successfully deleted!')
@@ -772,3 +796,100 @@ function removeRecipe(id) {
     let currentUrl = window.location.href;
     window.location.href = currentUrl;
 }
+
+
+
+// Classe per creare oggetti Recensione
+class Review {
+    constructor(email, id, name, difficulty, taste, comment, date) {
+        this.email = email
+        this.id = id;
+        this.name = name;
+        this.difficulty = difficulty;
+        this.taste = taste;
+        this.comment = comment;
+        this.date = date;
+    }
+}
+
+function addReview() {
+    data = document.getElementById('dataRecensione').value;
+    commento = document.getElementById('commentoRecensione').value;
+    difficolta = document.getElementById('difficoltaRecensione').value;
+    gusto = document.getElementById('gustoRecensione').value;
+
+    mail = sessionStorage.getItem('log');
+    users = JSON.parse(localStorage.getItem('utenti'));
+    user = users.find(user => user.email === mail);
+
+    var urlSearch = window.location.search;
+    hasParams = /\?.+=/.test(urlSearch);
+
+    if (hasParams) {
+        urlParams = new URLSearchParams(urlSearch);
+        id = urlParams.get('search');
+    } else {
+        alert('id not found');
+        return;
+    }
+
+    let newReview = new Review(user.email, id, user.username, difficolta, gusto, commento, data);
+
+    reviews = JSON.parse(localStorage.getItem('recensioni'));
+    reviews.push(newReview);
+    localStorage.setItem('recensioni', JSON.stringify(reviews));
+
+    currentUrl = window.location.href;
+    window.location.href = currentUrl;
+}
+
+function showRecensioni() {
+
+    var urlSearch = window.location.search;
+    hasParams = /\?.+=/.test(urlSearch);
+
+    if (hasParams) {
+        urlParams = new URLSearchParams(urlSearch);
+        id = urlParams.get('search');
+    } else {
+        alert('id not found');
+        return;
+    }
+
+    var lista = document.getElementById('listaRecensioni');
+    var master = document.getElementById('masterRecensioni');
+    
+
+    reviews = JSON.parse(localStorage.getItem('recensioni'));
+    reviews.forEach(review => {
+        if (review.id == id) {
+            var clone = master.cloneNode(true);
+            clone.querySelector('#usernameR').innerHTML = review.name;
+            clone.querySelector('#commentR').innerHTML = review.comment;
+            clone.querySelector('#dateR').innerHTML = '(' + review.date + ')';
+            clone.querySelector('#difficultyR').innerHTML += " " + review.difficulty;
+            clone.querySelector('#tasteR').innerHTML += " " + review.taste;
+            clone.classList.remove('d-none');
+            lista.appendChild(clone);
+        }
+    });
+}
+
+function mostraRecensioniAccount(mail) {
+    reviews = JSON.parse(localStorage.getItem('recensioni'));
+
+    var lista = document.getElementById('listaRecensioni');
+    var master = document.getElementById('masterRecensioni');
+    console.log(mail)
+    reviews.forEach(review => {
+        if (review.email == mail) {
+            document.getElementById('noReviews').classList.add('d-none');
+            console.log('ciao')
+            var clone = master.cloneNode(true);
+            clone.innerHTML = review.comment;
+            clone.classList.remove('d-none');
+            lista.appendChild(clone);
+        }
+    });
+}
+

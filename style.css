@@ -29,15 +29,57 @@ body::-webkit-scrollbar {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.review-input {
+    margin-top: 10px;
+}
+
+input[type="date"] {
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 6px;
+    width: 200px;
+
+}
 
 
+
+
+
+.modal-content {
+    position: relative;
+    padding: 20px;
+    border-radius: 20px;
+    z-index: 0;
+    /* Assicurarsi che il div principale sia sopra il pseudo-elemento */
+}
+
+.modal-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 10px;
+    /* Bordo arrotondato per seguire il div principale */
+    padding: 4px;
+    /* Spazio tra il contenuto del div e il bordo */
+    background: linear-gradient(45deg, grey, #fdb833, grey, #fdb833, grey, #fdb833);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    z-index: -1;
+    /* Assicurarsi che il pseudo-elemento sia sotto il div principale */
+}
 
 #signBtn:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-#modifyBtn1:hover, #modifyBtn2:hover {
+#modifyBtn1:hover,
+#modifyBtn2:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -57,7 +99,7 @@ body::-webkit-scrollbar {
 .card-container::-webkit-scrollbar {
     width: 12px;
     /* Larghezza della scrollbar */
-    background-color: whitesmoke;
+    background-color: white;
     /* Colore di sfondo della scrollbar */
 }
 
@@ -66,7 +108,7 @@ body::-webkit-scrollbar {
     /* Colore del "pollice" della scrollbar */
     border-radius: 10px;
     /* Angoli arrotondati del "pollice" */
-    border: 5px solid #f1f1f1;
+    border: 3px solid #f1f1f1;
     /* Margine attorno al "pollice" per l'effetto di spazio */
 }
 
@@ -117,7 +159,6 @@ li .btn {
     text-decoration: underline;
 }
 
-/* HOME*/
 
 #corpoHome {
     background-color: whitesmoke;

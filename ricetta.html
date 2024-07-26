@@ -61,18 +61,43 @@
             /* Nasconde le frecce */
         }
 
-        #btn_cuore, #btn_remove_cuore {
+        #btn_cuore,
+        #btn_remove_cuore {
             --bs-btn-hover-color: whitesmoke;
             --bs-btn-active-color: whitesmoke;
             transition: transform 0.2s ease-in-out;
         }
 
 
-        #btn_cuore:hover, #btn_cuore.clicked,
-        #btn_remove_cuore:hover, #btn_remove_cuore.clicked {
+        #btn_cuore:hover,
+        #btn_cuore.clicked,
+        #btn_remove_cuore:hover,
+        #btn_remove_cuore.clicked {
             transform: scale(1.1);
         }
 
+        .btn_review:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+
+
+
+        /* Stile per il cursore */
+        .form-range::-webkit-slider-thumb {
+            width: 20px;
+            height: 20px;
+            background: #fdb833;
+            border-radius: 50%;
+        }
+
+        /* Cambia il colore del cursore quando viene attivato */
+        .form-range:active::-webkit-slider-thumb {
+            background: #795202;
+            width: 25px;
+            height: 25px;
+        }
     </style>
 </head>
 
@@ -83,14 +108,13 @@
                 <a href="home.html" class="navbar-brand"><img id="logo" src="LOGO.png" alt=""></a>
             </div>
             <div class="col-sm-6 text-center">
-                <form onsubmit="return false">
-                    <div class="d-flex" role="search">
-                        <input id="barraRicerca" class="form-control me-2 focus-ring focus-ring-secondary rounded-5"
-                            style="border: 0px solid white;" type="search" placeholder="Search for a recipe!"
-                            aria-label="Search">
-                        <button onclick="mostraRicetteInside()" id="bottoneRicerca" class="btn rounded-5"
-                            style="border: 0px solid white; background-color: #fdb833; color: black;">Search</button>
-                    </div>
+                <form class="d-flex" role="search" onsubmit="return cercaRicette(event)">
+                    <input class="form-control me-2 focus-ring focus-ring-secondary rounded-5"
+                        style="border: 0px solid white;" type="search" placeholder="Search for a recipe!"
+                        aria-label="Search" id="searchInput">
+                    <button class="btn rounded-5"
+                        style="border: 0px solid white; background-color: #fdb833; color: black;" id="btn_search"
+                        type="submit">Search</button>
                 </form>
             </div>
             <div class="col text-end">
@@ -213,12 +237,51 @@
     <div class="container-fluid" style="width: 75%; margin-top: 25px;">
         <div class="row" style="display: flex;">
             <div class="col-8">
-                <h3 style="font-weight: 600;">Instructions</h3>
-                <ol id="listaInstruction" class="list-group list-group-numbered list-group-flush"
-                    style="margin-top: 20px; font-size: small;">
-                    <li id="instruction" class="list-group-item d-none" style="background-color: white;">An item</li>
-                </ol>
+                <div class="row">
+                    <div>
+                        <h3 style="font-weight: 600;">Instructions</h3>
+                        <ol id="listaInstruction" class="list-group list-group-numbered list-group-flush"
+                            style="margin-top: 20px; font-size: small;">
+                            <li id="instruction" class="list-group-item d-none" style="background-color: white;">An item
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div id="boxRecensioni" class="row" style="margin-top: 30px; background-color: whitesmoke; padding: 20px; border-radius: 10px;">
+                    <div style="position: relative; ">
+                        <h3 style="font-weight: 600;">Reviews</h3>
+                        <button type="button" class="btn btn_review" id="btn_review" data-bs-toggle="modal"
+                            data-bs-target="#reviewModal"
+                            style="position: absolute; top: 0; right: 10px; background-color: #fdb833; font-weight: 1000;">
+                            Add a review!<img src="review.svg" alt="" style="margin-left: 10px;"></button>
+                    </div>
+                    <div style="margin-top: 20px; width: 90%;">
+                        <ul id="listaRecensioni" class="list-group list-group-flush">
+                            <li id="masterRecensioni" class="list-group-item d-none p-3" style="background-color: whitesmoke;" >
+                                <div class="row" >
+                                    <div class="col-6" style="display: flex; align-items: baseline; width: fit-content; border-bottom: 2px solid #fdb833;">
+                                        <div id="usernameR" style="font-size: 1.25em; font-weight: 600;">Username</div>
+                                        <div id="dateR" style="font-size: 1em; color: gray; margin-left: 5px;">(01-07-2002)</div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;  display: flex; flex-wrap: nowrap;">
+                                    <div id="commentR" style="width: 75%;"> Qeusto è un commento di una recensione che mi serve come esempio, la ricetta è motlo bella e mi sono diveritito un sacco a farla, mi piacciono le patate</div>
+                                    <div style="font-weight: 600; margin-left: 80px; align-self: flex-end;">
+                                        <div id="difficultyR" style="margin-bottom: 10px;"><img src="difficulty.png" style="width: 30px; margin-right: 5px;" alt="">:</div>
+                                        <div id="tasteR"><img src="taste.png" style="width: 30px; margin-right: 5px;" alt="">:</div>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                            
+                            
+                            
+                        </ul>
+                    </div>
+                    <div class="col-4 d-none"></div>
+                </div>
             </div>
+
             <div class="col-4" style="margin-top: 10px;">
                 <h4 style="font-weight: 600;">Other similar dishes</h4>
                 <div id="listaPiatti" class="card-container">
@@ -235,7 +298,47 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
 
+
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" style="font-size: 3.5em; font-weight: 600; color: #fdb833;">Insert your
+                        review:</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="event.preventDefault()" style="font-weight: 600;">
+                        <div>
+                            <label for="data" class="form-label">Preparation date</label>
+                            <input id="dataRecensione" class="form-control focus-ring focus-ring-warning" name="data"
+                                type="date" style="border: 1px solid gray;">
+                        </div>
+                        <div class="review-input">
+                            <label for="commento" class="form-label">Description</label>
+                            <textarea id="commentoRecensione" class="form-control focus-ring focus-ring-warning"
+                                style="border: 1px solid gray;" rows="3"></textarea>
+                        </div>
+                        <div class="review-input">
+                            <label for="difficolta" class="form-label">Difficulty</label>
+                            <input id="difficoltaRecensione" type="range" class="form-range" min="1" max="5" step="0.5"
+                                id="difficulty">
+                        </div>
+                        <div class="review-input">
+                            <label for="taste" class="form-label">Taste</label>
+                            <input id="gustoRecensione" type="range" class="form-range" min="1" max="5" step="0.5"
+                                id="taste">
+                        </div>
+                        <div style="text-align: right; margin-top: 10px;">
+                            <button type="submit" onclick="addReview()" class="btn"
+                                style="background-color: #fdb833;">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -283,6 +386,21 @@
         checkLog();
         caricaRicetta();
         checkRicettario();
+        showRecensioni();
+
+        if (!sessionStorage.getItem('log')) {
+            document.getElementById('btn_review').setAttribute('disabled', true);
+        }
+
+        document.getElementById('dataRecensione').value = getTodayDate();
+
+        function getTodayDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
 
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))

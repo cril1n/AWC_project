@@ -91,6 +91,7 @@
                     <button type="button" class="list-group-item list-group-item-action" onclick="showDel()">Delete the
                         account</button>
                     <a href="ricettario.html" class="list-group-item list-group-item-action" >Recipe book</a>
+                    <button type="button" class="list-group-item list-group-item-action" onclick="showReviews()">Your reviews</button>
                 </ul>
             </div>
             <div class="col-8">
@@ -125,6 +126,15 @@
                 <div id="delete" class="p-3 d-none" style="position: relative; height: 100%;">
                     <h4>Are you sure do you want to delete your account? <br> You will lose your recipe book with all your notes.</h4>
                     <button class="btn btn-lg btn-danger" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" onclick="accountDel()"> DELETE</button>
+                </div>
+                <div id="reviews" class="p-3 d-none">
+                    <ul id="listaRecensioni" class="list-group list-group-flush">
+                        <h4 id="noReviews">You haven't made any reviews yet.</h4>
+                        <li id="masterRecensioni" class="list-group-item d-none">
+
+                        </li>
+                        
+                    </ul>
                 </div>
             </div>
         </div>
@@ -208,16 +218,7 @@
 
         checkLog();
 
-        function cercaRicette(event) {
-            event.preventDefault();
-
-            searchValue = document.getElementById('searchInput').value;
-            let encodedSearchValue = encodeURIComponent(searchValue);
-
-            window.location.href = `listaRicette.html?search=${encodedSearchValue}`;
-
-            return false;
-        }
+        
 
         mail = sessionStorage.getItem('log');
         users = JSON.parse(localStorage.getItem('utenti'));
@@ -245,12 +246,21 @@
 
         function showInfo() {
             document.getElementById('delete').classList.add('d-none');
+            document.getElementById('reviews').classList.add('d-none');
             document.getElementById('info').classList.remove('d-none');
         }
         function showDel() {
             document.getElementById('info').classList.add('d-none');
+            document.getElementById('reviews').classList.add('d-none');
             document.getElementById('delete').classList.remove('d-none');
         }
+        function showReviews() {
+            document.getElementById('info').classList.add('d-none');
+            document.getElementById('reviews').classList.remove('d-none');
+            document.getElementById('delete').classList.add('d-none');
+        }
+
+        mostraRecensioniAccount(user.email);
 
         function checkPsw() {
             pass = document.getElementById('password').value;
