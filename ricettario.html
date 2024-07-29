@@ -57,25 +57,7 @@
             /* Nasconde le frecce */
         }
 
-        .btn_note {
-            --bs-btn-hover-color: rgba(0, 0, 0, 0);
-            --bs-btn-active-color: rgba(0, 0, 0, 0);
-            background-color: rgba(0, 0, 0, 0);
-        }
-
-        .btn_cancel {
-            --bs-btn-hover-color: rgba(0, 0, 0, 0);
-            --bs-btn-active-color: rgba(0, 0, 0, 0);
-            background-color: rgba(0, 0, 0, 0);
-        }
-
-        .btn_note:hover {
-            transform: scale(1.2);
-        }
-
-        .btn_cancel:hover {
-            transform: scale(1.2);
-        }
+        
     </style>
 </head>
 
@@ -154,7 +136,7 @@
         <div id="lista_ricettario" class="container-fluid"
             style="display: flex; justify-content: center; width: 90%; flex-wrap: wrap; margin-top: 20px;">
 
-            <div id="master_ricettario" class="card mb-3 d-none"
+            <div id="master_ricettario" class="card mb-3 d-none" onclick="loadRecipe(event)"
                 style="position: relative; background-color: whitesmoke; border: 0px solid white; min-width: 900px; max-width: 900px; min-height: 375px; max-height: 375px; margin-top: 20px;">
 
                 <div class="row g-0">

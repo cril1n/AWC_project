@@ -88,10 +88,11 @@
                 <ul class="list-group list-group-flush rounded" style="font-size: x-large;">
                     <button type="button" class="list-group-item list-group-item-action"
                         style="background-color: lightgray;" onclick="showInfo()">Personal info</button>
+                    <a href="ricettario.html" class="list-group-item list-group-item-action">Recipe book</a>
+                    <button type="button" class="list-group-item list-group-item-action" onclick="showReviews()">Your
+                        reviews</button>
                     <button type="button" class="list-group-item list-group-item-action" onclick="showDel()">Delete the
                         account</button>
-                    <a href="ricettario.html" class="list-group-item list-group-item-action" >Recipe book</a>
-                    <button type="button" class="list-group-item list-group-item-action" onclick="showReviews()">Your reviews</button>
                 </ul>
             </div>
             <div class="col-8">
@@ -124,16 +125,34 @@
                     </form>
                 </div>
                 <div id="delete" class="p-3 d-none" style="position: relative; height: 100%;">
-                    <h4>Are you sure do you want to delete your account? <br> You will lose your recipe book with all your notes.</h4>
-                    <button class="btn btn-lg btn-danger" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" onclick="accountDel()"> DELETE</button>
+                    <h4>Are you sure do you want to delete your account? <br> You will lose your recipe book with all
+                        your notes.</h4>
+                    <button class="btn btn-lg btn-danger"
+                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+                        onclick="accountDel()"> DELETE</button>
                 </div>
                 <div id="reviews" class="p-3 d-none">
                     <ul id="listaRecensioni" class="list-group list-group-flush">
                         <h4 id="noReviews">You haven't made any reviews yet.</h4>
-                        <li id="masterRecensioni" class="list-group-item d-none">
-
+                        <li id="reviewTable" class="list-group-item d-none">
+                            <div class="row" style="font-size: 600; font-weight: 600;">
+                                <div class="col">Meal</div>
+                                <div class="col">Review date</div>
+                                <div class="col">Review comment</div>
+                            </div>
                         </li>
-                        
+                        <li id="masterRecensioni" class="list-group-item d-none" style="position: relative;">
+                            <div class="row" >
+                                <div class="col" id="nomeRicetta">ciao</div>
+                                <div class="col" id="dataRecensione">ciao</div>
+                                <div class="col" id="commentoRecensione">ciao</div>
+
+                            </div>
+                            <button class="btn btn_cancel" onclick="removeReview(this.parentElement)" style="position: absolute; top: 0px; right: 0px;"><img
+                                    src="cancel.svg" alt=""></button>
+                        </li>
+
+
                     </ul>
                 </div>
             </div>
@@ -211,14 +230,14 @@
 
 
     <script>
-        
+
         if (sessionStorage.getItem('log') == null) {
             window.location.href = 'home.html';
         }
 
         checkLog();
 
-        
+
 
         mail = sessionStorage.getItem('log');
         users = JSON.parse(localStorage.getItem('utenti'));

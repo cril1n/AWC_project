@@ -84,6 +84,26 @@ input[type="date"] {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.btn_note {
+    --bs-btn-hover-color: rgba(0, 0, 0, 0);
+    --bs-btn-active-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.btn_cancel {
+    --bs-btn-hover-color: rgba(0, 0, 0, 0);
+    --bs-btn-active-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.btn_note:hover {
+    transform: scale(1.2);
+}
+
+.btn_cancel:hover {
+    transform: scale(1.2);
+}
+
 #logo {
     width: 40px;
     margin-left: 20px;

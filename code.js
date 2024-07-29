@@ -801,7 +801,7 @@ function removeRecipe(id) {
 
 // Classe per creare oggetti Recensione
 class Review {
-    constructor(email, id, name, difficulty, taste, comment, date) {
+    constructor(email, id, name, difficulty, taste, comment, date, meal) {
         this.email = email
         this.id = id;
         this.name = name;
@@ -809,6 +809,7 @@ class Review {
         this.taste = taste;
         this.comment = comment;
         this.date = date;
+        this.meal = meal;
     }
 }
 
@@ -817,6 +818,7 @@ function addReview() {
     commento = document.getElementById('commentoRecensione').value;
     difficolta = document.getElementById('difficoltaRecensione').value;
     gusto = document.getElementById('gustoRecensione').value;
+    meal = document.getElementById('title').innerHTML;
 
     mail = sessionStorage.getItem('log');
     users = JSON.parse(localStorage.getItem('utenti'));
@@ -833,7 +835,7 @@ function addReview() {
         return;
     }
 
-    let newReview = new Review(user.email, id, user.username, difficolta, gusto, commento, data);
+    let newReview = new Review(user.email, id, user.username, difficolta, gusto, commento, data, meal);
 
     reviews = JSON.parse(localStorage.getItem('recensioni'));
     reviews.push(newReview);
@@ -858,7 +860,7 @@ function showRecensioni() {
 
     var lista = document.getElementById('listaRecensioni');
     var master = document.getElementById('masterRecensioni');
-    
+
 
     reviews = JSON.parse(localStorage.getItem('recensioni'));
     reviews.forEach(review => {
@@ -880,16 +882,36 @@ function mostraRecensioniAccount(mail) {
 
     var lista = document.getElementById('listaRecensioni');
     var master = document.getElementById('masterRecensioni');
-    console.log(mail)
+
     reviews.forEach(review => {
         if (review.email == mail) {
             document.getElementById('noReviews').classList.add('d-none');
-            console.log('ciao')
+            document.getElementById('reviewTable').classList.remove('d-none');
             var clone = master.cloneNode(true);
-            clone.innerHTML = review.comment;
+            clone.querySelector('#nomeRicetta').innerHTML = review.meal;
+            clone.querySelector('#dataRecensione').innerHTML = review.date;
+            clone.querySelector('#commentoRecensione').innerHTML = review.comment.substring(0, 20) + "...";
             clone.classList.remove('d-none');
             lista.appendChild(clone);
         }
     });
+
+}
+
+function removeReview(item) {
+    mail = sessionStorage.getItem('log');
+    users = JSON.parse(localStorage.getItem('utenti'));
+    user = users.find(user => user.email === mail);
+
+    commento = item.querySelector("#commentoRecensione").textContent;
+    nome = item.querySelector("#nomeRicetta").textContent;
+    data = item.querySelector("#dataRecensione").textContent;
+
+    reviews = JSON.parse(localStorage.getItem('recensioni'));
+    reviews = reviews.filter(review => ( review.meal !== nome));
+    localStorage.setItem('recensioni', JSON.stringify(reviews));
+
+    currentUrl = window.location.href;
+    window.location.href = currentUrl;
 }
 
