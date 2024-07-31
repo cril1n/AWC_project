@@ -698,7 +698,7 @@ function accountDel() {
     localStorage.setItem('recensioni', JSON.stringify(reviews));
 
 
-    window.location.href = 'home.html';
+    window.location.href = 'index.html';
     alert('User successfully deleted!')
 }
 

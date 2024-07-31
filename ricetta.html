@@ -105,7 +105,7 @@
     <nav class="navbar sticky-top">
         <div class="container-fluid row">
             <div class="col">
-                <a href="home.html" class="navbar-brand"><img id="logo" src="LOGO.png" alt=""></a>
+                <a href="index.html" class="navbar-brand"><img id="logo" src="LOGO.png" alt=""></a>
             </div>
             <div class="col-sm-6 text-center">
                 <form class="d-flex" role="search" onsubmit="return cercaRicette(event)">
@@ -128,40 +128,56 @@
             </div>
         </div>
 
-        <div class="offcanvas offcanvas-end p-3" style="width: 300px;" tabindex="-1" id="offcanvasNavbar"
+        <div class="offcanvas offcanvas-end p-3" style="width: 350px;" tabindex="-1" id="offcanvasNavbar"
             aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
-                <h4 class="offcanvas-title" id="offcanvasNavbarLabel"
-                    style="font-size: x-large; font-weight: 700; color: #fdb833;">Creative Recipes</h4>
+                <h4 class="offcanvas-title" id="offcanvasNavbarLabel" style="font-size: x-large; font-weight: 700;">
+                    Creative Recipes</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body" style="border-bottom: 2px solid black; max-height: 175px;">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="home.html"> <img src="house.svg" alt=""
-                                style="margin-right: 10px;"> Home </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="account.html"> <img src="person-2.svg"
-                                alt="" style="margin-right: 5px;"> Account</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="ricettario.html"> <img src="book.svg"
-                                alt="" style="margin-right: 5px;"> Recipe book</a>
-                    </li>
-                </ul>
+            <div class="offcanvas-body" style="border-bottom: 3px solid #fdb833; max-height: 175px;">
+                <div class="col">
+                    <div class="row">
+                        <a href="index.html" class="btn" role="button" style="width: fit-content;"> <img src="house.svg"
+                                alt="" style="margin-right: 10px;"> Home
+                        </a>
+                    </div>
+                    <div class="row">
+                        <a href="account.html" class="btn" role="button" style="width: fit-content;"> <img
+                                src="person-2.svg" alt="" style="margin-right: 10px;">
+                            Account </a>
+                    </div>
+                    <div class="row">
+                        <a href="ricettario.html" class="btn" role="button" style="width: fit-content;"> <img
+                                src="book.svg" alt="" style="margin-right: 10px;">
+                            Recipe book </a>
+                    </div>
+                </div>
             </div>
             <div class="offcanvas-body">
-                <h5 style="font-weight: 700;"> Search by category: </h5>
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3"
-                    style="list-style-type: disc; margin-left: 20px;">
-                    <li><button class="btn" onclick="searchRecipes('Beef')"> Beef </button></li>
-                    <li><button class="btn" onclick="searchRecipes('Chicken')"> Chicken </button></li>
-                    <li><button class="btn" onclick="searchRecipes('Seafood')"> Seafood </button></li>
-                    <li><button class="btn" onclick="searchRecipes('Starter')"> Starter </button></li>
-                    <li><button class="btn" onclick="searchRecipes('Side')"> Side </button></li>
-                    <li><button class="btn" onclick="searchRecipes('Dessert')"> Dessert </button></li>
-                </ul>
+                <h5 style="font-weight: 700;"> <img src="posate.svg"
+                        style="width: 27px; margin-left: 2px; margin-right: 5px;" alt=""> Category: </h5>
+                <div class="col"
+                    style="margin-left: 14px; margin-top: 15px; padding-left: 25px; border-left: 3px solid #fdb833">
+                    <div class="row"><button class="btn" onclick="searchRecipes('Beef')" style="width: fit-content;">
+                            Beef
+                        </button></div>
+                    <div class="row"><button class="btn" onclick="searchRecipes('Chicken')" style="width: fit-content;">
+                            Chicken
+                        </button></div>
+                    <div class="row"><button class="btn" onclick="searchRecipes('Seafood')" style="width: fit-content;">
+                            Seafood
+                        </button></div>
+                    <div class="row"><button class="btn" onclick="searchRecipes('Starter')" style="width: fit-content;">
+                            Starter
+                        </button></div>
+                    <div class="row"><button class="btn" onclick="searchRecipes('Side')" style="width: fit-content;">
+                            Side
+                        </button></div>
+                    <div class="row"><button class="btn" onclick="searchRecipes('Dessert')" style="width: fit-content;">
+                            Dessert
+                        </button></div>
+                </div>
             </div>
         </div>
     </nav>
@@ -247,7 +263,8 @@
                         </ol>
                     </div>
                 </div>
-                <div id="boxRecensioni" class="row" style="margin-top: 30px; background-color: whitesmoke; padding: 20px; border-radius: 10px;">
+                <div id="boxRecensioni" class="row"
+                    style="margin-top: 30px; background-color: whitesmoke; padding: 20px; border-radius: 10px;">
                     <div style="position: relative; ">
                         <h3 style="font-weight: 600;">Reviews</h3>
                         <button type="button" class="btn btn_review" id="btn_review" data-bs-toggle="modal"
@@ -257,25 +274,32 @@
                     </div>
                     <div style="margin-top: 20px; width: 90%;">
                         <ul id="listaRecensioni" class="list-group list-group-flush">
-                            <li id="masterRecensioni" class="list-group-item d-none p-3" style="background-color: whitesmoke;" >
-                                <div class="row" >
-                                    <div class="col-6" style="display: flex; align-items: baseline; width: fit-content; border-bottom: 2px solid #fdb833;">
+                            <li id="masterRecensioni" class="list-group-item d-none p-3"
+                                style="background-color: whitesmoke;">
+                                <div class="row">
+                                    <div class="col-6"
+                                        style="display: flex; align-items: baseline; width: fit-content; border-bottom: 2px solid #fdb833;">
                                         <div id="usernameR" style="font-size: 1.25em; font-weight: 600;">Username</div>
-                                        <div id="dateR" style="font-size: 1em; color: gray; margin-left: 5px;">(01-07-2002)</div>
+                                        <div id="dateR" style="font-size: 1em; color: gray; margin-left: 5px;">
+                                            (01-07-2002)</div>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top: 10px;  display: flex; flex-wrap: nowrap;">
-                                    <div id="commentR" style="width: 75%;"> Qeusto è un commento di una recensione che mi serve come esempio, la ricetta è motlo bella e mi sono diveritito un sacco a farla, mi piacciono le patate</div>
+                                    <div id="commentR" style="width: 75%;"> Qeusto è un commento di una recensione che
+                                        mi serve come esempio, la ricetta è motlo bella e mi sono diveritito un sacco a
+                                        farla, mi piacciono le patate</div>
                                     <div style="font-weight: 600; margin-left: 80px; align-self: flex-end;">
-                                        <div id="difficultyR" style="margin-bottom: 10px;"><img src="difficulty.png" style="width: 30px; margin-right: 5px;" alt="">:</div>
-                                        <div id="tasteR"><img src="taste.png" style="width: 30px; margin-right: 5px;" alt="">:</div>
+                                        <div id="difficultyR" style="margin-bottom: 10px;"><img src="difficulty.png"
+                                                style="width: 30px; margin-right: 5px;" alt="">:</div>
+                                        <div id="tasteR"><img src="taste.png" style="width: 30px; margin-right: 5px;"
+                                                alt="">:</div>
                                     </div>
                                 </div>
                             </li>
-                            
-                            
-                            
-                            
+
+
+
+
                         </ul>
                     </div>
                     <div class="col-4 d-none"></div>

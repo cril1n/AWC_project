@@ -157,11 +157,11 @@
     }
 
     .card-container::-webkit-scrollbar {
-    width: 12px;
-    /* Larghezza della scrollbar */
-    background-color: whitesmoke;
-    /* Colore di sfondo della scrollbar */
-}
+      width: 12px;
+      /* Larghezza della scrollbar */
+      background-color: whitesmoke;
+      /* Colore di sfondo della scrollbar */
+    }
   </style>
 </head>
 
@@ -169,7 +169,7 @@
   <nav class="navbar sticky-top">
     <div class="container-fluid row">
       <div class="col">
-        <a href="home.html" class="navbar-brand"><img id="logo" src="LOGO.png" alt=""></a>
+        <a href="index.html" class="navbar-brand"><img id="logo" src="LOGO.png" alt=""></a>
       </div>
       <div class="col-sm-6 text-center">
         <form class="d-flex" role="search" onsubmit="return cercaRicette(event)">
@@ -190,41 +190,57 @@
       </div>
     </div>
 
-    <div class="offcanvas offcanvas-end p-3" style="width: 300px;" tabindex="-1" id="offcanvasNavbar"
+
+
+
+    <div class="offcanvas offcanvas-end p-3" style="width: 350px;" tabindex="-1" id="offcanvasNavbar"
       aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header">
         <h4 class="offcanvas-title" id="offcanvasNavbarLabel"
-          style="font-size: x-large; font-weight: 700; color: #fdb833;">Creative Recipes</h4>
+          style="font-size: x-large; font-weight: 700;">Creative Recipes</h4>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
-      <div class="offcanvas-body" style="border-bottom: 2px solid black; max-height: 175px;">
-        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="home.html"> <img src="house.svg" alt=""
-                style="margin-right: 10px;"> Home </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="account.html"> <img src="person-2.svg" alt=""
-                style="margin-right: 5px;"> Account</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="ricettario.html"> <img src="book.svg" alt=""
-                style="margin-right: 5px;"> Recipe book</a>
-          </li>
-        </ul>
+      <div class="offcanvas-body" style="border-bottom: 3px solid #fdb833; max-height: 175px;">
+        <div class="col">
+          <div class="row">
+            <a href="index.html" class="btn" role="button" style="width: fit-content;"> <img src="house.svg" alt="" style="margin-right: 10px;"> Home
+            </a>
+          </div>
+          <div class="row">
+            <a href="account.html" class="btn" role="button" style="width: fit-content;"> <img src="person-2.svg" alt=""
+                style="margin-right: 10px;">
+              Account </a>
+          </div>
+          <div class="row">
+            <a href="ricettario.html" class="btn" role="button" style="width: fit-content;"> <img src="book.svg" alt="" style="margin-right: 10px;">
+              Recipe book </a>
+          </div>
+        </div>
       </div>
       <div class="offcanvas-body">
-        <h5 style="font-weight: 700;"> Search by category: </h5>
-        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" style="list-style-type: disc; margin-left: 20px;">
-          <li><button class="btn" onclick="searchRecipes('Beef')"> Beef </button></li>
-          <li><button class="btn" onclick="searchRecipes('Chicken')"> Chicken </button></li>
-          <li><button class="btn" onclick="searchRecipes('Seafood')"> Seafood </button></li>
-          <li><button class="btn" onclick="searchRecipes('Starter')"> Starter </button></li>
-          <li><button class="btn" onclick="searchRecipes('Side')"> Side </button></li>
-          <li><button class="btn" onclick="searchRecipes('Dessert')"> Dessert </button></li>
-        </ul>
+        <h5 style="font-weight: 700;"> <img src="posate.svg" style="width: 27px; margin-left: 2px; margin-right: 5px;"
+            alt=""> Category: </h5>
+        <div class="col"
+          style="margin-left: 14px; margin-top: 15px; padding-left: 25px; border-left: 3px solid #fdb833">
+          <div class="row"><button class="btn" onclick="searchRecipes('Beef')" style="width: fit-content;"> Beef
+            </button></div>
+          <div class="row"><button class="btn" onclick="searchRecipes('Chicken')" style="width: fit-content;"> Chicken
+            </button></div>
+          <div class="row"><button class="btn" onclick="searchRecipes('Seafood')" style="width: fit-content;"> Seafood
+            </button></div>
+          <div class="row"><button class="btn" onclick="searchRecipes('Starter')" style="width: fit-content;"> Starter
+            </button></div>
+          <div class="row"><button class="btn" onclick="searchRecipes('Side')" style="width: fit-content;"> Side
+            </button></div>
+          <div class="row"><button class="btn" onclick="searchRecipes('Dessert')" style="width: fit-content;"> Dessert
+            </button></div>
+        </div>
       </div>
     </div>
+
+
+
+
   </nav>
 
 

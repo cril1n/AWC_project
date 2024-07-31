@@ -155,10 +155,11 @@ input[type="date"] {
 }
 
 .offcanvas-header {
-    border-bottom: 2px solid black;
+    border-bottom: 3px solid #fdb833;
     display: flex;
     align-items: center;
 }
+
 
 a {
     text-decoration: none;
@@ -167,17 +168,6 @@ a {
     /* Usa il colore del testo circostante o puoi specificare un colore */
 }
 
-
-.nav-link {
-    font-size: small;
-    font-weight: 600;
-}
-
-li .btn {
-    font-size: medium;
-    font-weight: 500;
-    text-decoration: underline;
-}
 
 
 #corpoHome {
