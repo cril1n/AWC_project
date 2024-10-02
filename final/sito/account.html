@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Account</title>
+    <link rel="icon" href="miniLOGO.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="code.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <nav class="navbar sticky-top">
+        <div class="container-fluid row">
+            <div class="col">
+                <a href="home.html" class="navbar-brand"><img id="logo" src="LOGO.png" alt=""></a>
+            </div>
+            <div class="col-sm-6 text-center">
+                <form class="d-flex" role="search" onsubmit="return cercaRicette(event)">
+                    <input class="form-control me-2 focus-ring focus-ring-secondary rounded-5"
+                        style="border: 0px solid white;" type="search" placeholder="Search for a recipe!"
+                        aria-label="Search" id="searchInput">
+                    <button class="btn rounded-5"
+                        style="border: 0px solid white; background-color: #fdb833; color: black;" id="btn_search"
+                        type="submit">Search</button>
+                </form>
+            </div>
+            <div class="col text-end">
+                <button id="menuLogo" class="navbar-toggler focus-ring focus-ring-warning rounded-5" type="button"
+                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a id="accountLogo" class="nav-link active" aria-current="page" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"><button class="btn"><img src="person.svg" alt=""></button></a>
+            </div>
+        </div>
+
+        <div class="offcanvas offcanvas-end p-3" style="width: 350px;" tabindex="-1" id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h4 class="offcanvas-title" id="offcanvasNavbarLabel" style="font-size: x-large; font-weight: 700;">
+                    Creative Recipes</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body" style="border-bottom: 3px solid #fdb833; max-height: 175px;">
+                <div class="col">
+                    <div class="row">
+                        <a href="home.html" class="btn" role="button" style="width: fit-content;"> <img src="house.svg"
+                                alt="" style="margin-right: 10px;"> Home
+                        </a>
+                    </div>
+                    <div class="row">
+                        <a href="home.html" onclick="logOut()" class="btn" role="button" style="width: fit-content;">
+                            <img src="person-2.svg" alt="" style="margin-right: 10px;">
+                            Log out </a>
+                    </div>
+                    <div class="row">
+                        <a href="ricettario.html" class="btn" role="button" style="width: fit-content;"> <img
+                                src="book.svg" alt="" style="margin-right: 10px;">
+                            Recipe book </a>
+                    </div>
+                </div>
+            </div>
+            <div class="offcanvas-body">
+                <h5 style="font-weight: 700;"> <img src="posate.svg"
+                        style="width: 27px; margin-left: 2px; margin-right: 5px;" alt=""> Category: </h5>
+                <div class="col"
+                    style="margin-left: 14px; margin-top: 15px; padding-left: 25px; border-left: 3px solid #fdb833">
+                    <div class="row"><button class="btn" onclick="searchRecipes('Beef')" style="width: fit-content;">
+                            Beef
+                        </button></div>
+                    <div class="row"><button class="btn" onclick="searchRecipes('Chicken')" style="width: fit-content;">
+                            Chicken
+                        </button></div>
+                    <div class="row"><button class="btn" onclick="searchRecipes('Seafood')" style="width: fit-content;">
+                            Seafood
+                        </button></div>
+                    <div class="row"><button class="btn" onclick="searchRecipes('Starter')" style="width: fit-content;">
+                            Starter
+                        </button></div>
+                    <div class="row"><button class="btn" onclick="searchRecipes('Side')" style="width: fit-content;">
+                            Side
+                        </button></div>
+                    <div class="row"><button class="btn" onclick="searchRecipes('Dessert')" style="width: fit-content;">
+                            Dessert
+                        </button></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid" style="width: 65%; margin-top: 40px;">
+        <h1 id="user" style="font-size: 4em; font-weight: 900;"></h1>
+        <div class="row rounded-2 p-3"
+            style="background-color: whitesmoke; margin-top: 30px; margin-bottom: 40px; height: 500px;">
+            <div class="col-4 p-4" style=" border-right: 1px solid lightgray; ">
+                <ul class="list-group list-group-flush rounded" style="font-size: x-large;">
+                    <button type="button" class="list-group-item list-group-item-action"
+                        style="background-color: lightgray;" onclick="showInfo()">Personal info</button>
+                    <a href="ricettario.html" class="list-group-item list-group-item-action">Recipe book</a>
+                    <button type="button" class="list-group-item list-group-item-action" onclick="showReviews()">Your
+                        reviews</button>
+                    <button type="button" class="list-group-item list-group-item-action" onclick="showDel()">Delete the
+                        account</button>
+                </ul>
+            </div>
+            <div class="col-8">
+                <div id="info" class="p-3">
+                    <form onsubmit="event.preventDefault()">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastname" class="form-label">Lastname</label>
+                            <input type="text" class="form-control" id="lastname" disabled>
+                        </div>
+                        <div style="text-align: right;">
+                            <button id="modifyBtn2" class="btn btn-lg d-none" onclick="modify()"
+                                style="background-color: #fdb833; margin-top: 10px;"> Confirm
+                                changes</button>
+                            <button id="modifyBtn1" class="btn btn-lg" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal"
+                                style="background-color: #fdb833; margin-top: 10px;">Modify</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="delete" class="p-3 d-none" style="position: relative; height: 100%;">
+                    <h4>Are you sure do you want to delete your account? <br> You will lose your recipe book with all
+                        your notes.</h4>
+                    <button class="btn btn-lg btn-danger"
+                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+                        onclick="accountDel()"> DELETE</button>
+                </div>
+                <div id="reviews" class="p-3 d-none">
+                    <ul id="listaRecensioni" class="list-group list-group-flush">
+                        <h4 id="noReviews">You haven't made any reviews yet.</h4>
+                        <li id="reviewTable" class="list-group-item d-none">
+                            <div class="row" style="font-size: 600; font-weight: 600;">
+                                <div class="col">Meal</div>
+                                <div class="col">Review date</div>
+                                <div class="col">Review comment</div>
+                            </div>
+                        </li>
+                        <li id="masterRecensioni" class="list-group-item d-none" style="position: relative;">
+                            <div class="row">
+                                <div class="col" id="nomeRicetta">ciao</div>
+                                <div class="col" id="dataRecensione">ciao</div>
+                                <div class="col" id="commentoRecensione">ciao</div>
+
+                            </div>
+                            <button class="btn btn_cancel" onclick="removeReview(this.parentElement)"
+                                style="position: absolute; top: 0px; right: -15px;"><img src="cancel.svg"
+                                    alt=""></button>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid"
+        style="background-color: whitesmoke; padding-top: 40px; padding-bottom: 40px; text-align: center;">
+        <div class="row w-75"
+            style="text-align: center; border-top: 1px solid lightgray; padding-top: 40px; margin-left: 160px;">
+            <div class="col"><img src="LOGO.png" alt="" style="height: 150px;"></div>
+            <div class="col">
+                <h5 style="font-weight: 600;">Follow us on </h5>
+                <ul class="list-group list-group-flush position-relative">
+                    <li class="list-group-item"><a href="https://www.instagram.com"><img style="margin-right: 10px;"
+                                src="instagram.svg" alt=""></a>Instagram</li>
+                    <li class="list-group-item"><a href="https://www.facebook.com"><img style="margin-right: 10px;"
+                                src="facebook.svg" alt=""></a>Facebook</li>
+                    <li class="list-group-item"><a href="https://www.tiktok.com"><img style="margin-right: 10px;"
+                                src="tiktok.svg" alt=""></a>TikTok</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h5 style="font-weight: 600;">Stuffs</h5>
+                <ul class="list-group list-group-flush " style="background-color: whitesmoke;">
+                    <li class="list-group-item"><a href="sign.html"><u>Create a new account</u></a></li>
+                    <li class="list-group-item"><a href="https://github.com/cril1n"><u>Credits</u></a></li>
+                    <li class="list-group-item"><a href="https://www.themealdb.com/"><u>Data source</u></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Insert your password before</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="event.preventDefault()">
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control focus-ring focus-ring-warning" id="password"
+                                style="border: 1px solid lightgray;" placeholder="Password" required>
+                            <label for="password1">Password</label>
+                        </div>
+                        <div style="text-align: right;">
+                            <button class="btn" style="background-color: #fdb833;" onclick="checkPsw()"
+                                data-bs-dismiss="modal">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+
+        if (sessionStorage.getItem('log') == null) {
+            window.location.href = 'home.html';
+        }
+
+        checkLog();
+
+
+
+        mail = sessionStorage.getItem('log');
+        users = JSON.parse(localStorage.getItem('utenti'));
+        user = users.find(user => user.email === mail);
+
+        document.getElementById('user').innerHTML = 'Hello ' + user.username + '!';
+        document.getElementById('email').value = user.email;
+        document.getElementById('username').value = user.username;
+        document.getElementById('name').value = user.name;
+        document.getElementById('lastname').value = user.lastname;
+
+
+        // Funzione per evidenziare la sessione attiva
+        document.addEventListener('DOMContentLoaded', function () {
+            const buttons = document.querySelectorAll('.list-group-item-action');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function () {
+                    buttons.forEach(btn => btn.style.backgroundColor = 'whitesmoke');
+
+                    this.style.backgroundColor = 'lightgray';
+                });
+            });
+        });
+
+        function showInfo() {
+            document.getElementById('delete').classList.add('d-none');
+            document.getElementById('reviews').classList.add('d-none');
+            document.getElementById('info').classList.remove('d-none');
+        }
+        function showDel() {
+            document.getElementById('info').classList.add('d-none');
+            document.getElementById('reviews').classList.add('d-none');
+            document.getElementById('delete').classList.remove('d-none');
+        }
+        function showReviews() {
+            document.getElementById('info').classList.add('d-none');
+            document.getElementById('reviews').classList.remove('d-none');
+            document.getElementById('delete').classList.add('d-none');
+        }
+
+        mostraRecensioniAccount(user.email);
+
+        // Funzione per permettere la modifica dei dati dell'account
+        function checkPsw() {
+            pass = document.getElementById('password').value;
+            if (pass != user.psw) {
+                alert('Password errata.');
+                return;
+            } else {
+                document.getElementById('email').removeAttribute('disabled');
+                document.getElementById('username').removeAttribute('disabled');
+                document.getElementById('name').removeAttribute('disabled');
+                document.getElementById('lastname').removeAttribute('disabled');
+                document.getElementById('modifyBtn2').classList.remove('d-none');
+                document.getElementById('modifyBtn1').classList.add('d-none');
+            }
+        }
+
+        function modify() {
+            newMail = document.getElementById('email').value;
+            newUsr = document.getElementById('username').value;
+            newName = document.getElementById('name').value;
+            newLname = document.getElementById('lastname').value;
+
+            if (!isNonEmptyString(newName)) {
+                alert('Insert a valid name!')
+                return false;
+            }
+            if (!isNonEmptyString(newLname)) {
+                alert('Insert a valid lastname!')
+                return false;
+            }
+            if (!isNonEmptyString(newUsr)) {
+                alert('Insert a valid username!')
+                return false;
+            }
+            if (!isValidEmail(newMail)) {
+                alert('Insert a valid email!')
+                return false;
+            }
+
+            user.name = newName;
+            user.lastname = newLname;
+            user.email = newMail;
+            user.username = newUsr;
+            localStorage.setItem('utenti', JSON.stringify(users))
+
+            document.getElementById('modifyBtn2').classList.add('d-none');
+            document.getElementById('modifyBtn1').classList.remove('d-none');
+            document.getElementById('email').setAttribute('disabled', true);
+            document.getElementById('username').setAttribute('disabled', true);
+            document.getElementById('name').setAttribute('disabled', true);
+            document.getElementById('lastname').setAttribute('disabled', true);
+
+            alert('Data modified!')
+
+        }
+
+        function isNonEmptyString(str) {
+            return /^.+$/.test(str);
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[\w\.\-]+@[a-zA-Z\d\.\-]+\.[a-zA-Z]{2,}$/;
+            return emailRegex.test(email);
+        }
+
+    </script>
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

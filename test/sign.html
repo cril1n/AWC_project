@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in</title>
+  <link rel="icon" href="miniLOGO.png" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <script src="code.js"></script>
+</head>
+
+<body>
+  <nav class="navbar sticky-top">
+    <div class="container-fluid row">
+      <div class="col">
+        <a href="index.html" class="navbar-brand"><img id="logo" src="LOGO.png" alt=""></a>
+      </div>
+      <div class="col text-end">
+        <button class="navbar-toggler focus-ring focus-ring-warning rounded-5" type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end p-3" style="width: 350px;" tabindex="-1" id="offcanvasNavbar"
+      aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <h4 class="offcanvas-title" id="offcanvasNavbarLabel" style="font-size: x-large; font-weight: 700;">Creative
+          Recipes</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body" style="border-bottom: 3px solid #fdb833; max-height: 80px;">
+        <div class="col">
+          <div class="row">
+            <a href="index.html" class="btn" role="button" style="width: fit-content;"> <img src="house.svg" alt=""
+                style="margin-right: 10px;"> Home
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="offcanvas-body">
+        <h5 style="font-weight: 700;"> <img src="posate.svg" style="width: 27px; margin-left: 2px; margin-right: 5px;"
+            alt=""> Category: </h5>
+        <div class="col"
+          style="margin-left: 14px; margin-top: 15px; padding-left: 25px; border-left: 3px solid #fdb833">
+          <div class="row"><button class="btn" onclick="searchRecipes('Beef')" style="width: fit-content;"> Beef
+            </button></div>
+          <div class="row"><button class="btn" onclick="searchRecipes('Chicken')" style="width: fit-content;"> Chicken
+            </button></div>
+          <div class="row"><button class="btn" onclick="searchRecipes('Seafood')" style="width: fit-content;"> Seafood
+            </button></div>
+          <div class="row"><button class="btn" onclick="searchRecipes('Starter')" style="width: fit-content;"> Starter
+            </button></div>
+          <div class="row"><button class="btn" onclick="searchRecipes('Side')" style="width: fit-content;"> Side
+            </button></div>
+          <div class="row"><button class="btn" onclick="searchRecipes('Dessert')" style="width: fit-content;"> Dessert
+            </button></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid" style="width: 500px; margin-top: 60px;">
+    <h3 style="font-weight: 600; margin-bottom: 20px;">Sign in</h3>
+    <form action="index.html" onsubmit="return salvaUtente();">
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control focus-ring focus-ring-warning" style="border: 1px solid lightgray;"
+          id="name" placeholder="Name">
+        <label for="name">Name</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control focus-ring focus-ring-warning" style="border: 1px solid lightgray;"
+          id="lastname" placeholder="Name" required>
+        <label for="lastname">Last name</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="email" class="form-control focus-ring focus-ring-warning" id="email"
+          style="border: 1px solid lightgray;" placeholder="name@example.com" required>
+        <label for="email">Email address</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control focus-ring focus-ring-warning" style="border: 1px solid lightgray;"
+          id="username" placeholder="Username" required>
+        <label for="username">Username</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control focus-ring focus-ring-warning" id="password1"
+          style="border: 1px solid lightgray;" placeholder="Password" aria-describedby="passwordHelp" required>
+        <div id="passwordHelp" class="form-text" style="font-size: x-small;">Password must be 8 character long and
+          cointain at least one number.</div>
+        <label for="password1">Password</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control focus-ring focus-ring-warning" id="password2"
+          style="border: 1px solid lightgray;" placeholder="Password" required>
+        <label for="password2">Confirm password</label>
+      </div>
+      <div style="text-align: right;">
+        <button id="signBtn" type="submit" class="btn"
+          style="background-color: #fdb833; margin-right: 10px;">Submit</button>
+        <button type="reset" class="btn btn-outline-secondary">Reset</button>
+      </div>
+    </form>
+  </div>
+
+
+  <script>
+    logOut()
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
